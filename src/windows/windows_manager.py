@@ -4,18 +4,15 @@ from src.windows.processors.start_window_processor import StartWindowProcessor
 
 
 class WindowsManager:
-    windows = {}
+    __windows = {}
 
-    @property
-    def start_window_controller(self):
-        return WindowsManager.__start_window_controller
-
-    @property
-    def start_window_processor(self):
-        return WindowsManager.__start_window_processor
+    # @property
+    def windows(self) -> dict:
+        return self.__windows
 
     @classmethod
-    def set_start_window(cls):
-        WindowsManager.windows["start_window"] = {}
-        WindowsManager.windows["start_window"]["controller"] = StartWindowController()
-        WindowsManager.windows["start_window"]["processor"] = StartWindowProcessor(cls)
+    def set_start_window(cls) -> None:
+        WindowsManager.windows["start_window"] = {
+            "controller": StartWindowController(),
+            "processor": StartWindowProcessor(cls)
+        }

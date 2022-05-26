@@ -12,3 +12,4 @@ class StartWindowProcessor:
         window = window_controller.start_window
 
         self.pvp_btn = window.findChild(QPushButton, "pvp_btn")
+        # self.
