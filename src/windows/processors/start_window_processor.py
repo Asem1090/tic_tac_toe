@@ -12,4 +12,14 @@ class StartWindowProcessor:
         window = window_controller.start_window
 
         self.pvp_btn = window.findChild(QPushButton, "pvp_btn")
-        # self.
+        self.pve_btn = window.findChild(QPushButton, "pve_btn")
+        self.local_network_btn = window.findChild(QPushButton, "local_network_btn")
+
+    def pvp_btn_pressed(self):
+        pass
+
+    def pve_btn_pressed(self):
+        pass
+
+    def local_network_btn_pressed(self):
+        pass

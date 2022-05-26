@@ -1,20 +1,11 @@
 # Custom libs
-from src.windows.windows_manager import WindowsManager
+# from src.windows.windows_manager import WindowsManager
 
 
 class Renderer:
     __up_to_date = True
-    __action_required = {
-        "start_window": False
-    }
-    __action_for_windows = {
-        "start_window":
-            {
-                "pvp_btn_pressed": False,
-                "pve_btn_pressed": False,
-                "local_network_btn_pressed": False
-            }
-    }
+    action_required = {}
+    action_for_windows = {}
 
     def __init__(self):
         while True:
@@ -27,14 +18,6 @@ class Renderer:
     @property
     def up_to_date(self):
         return self.__up_to_date
-
-    @property
-    def action_required(self):
-        return self.__action_required
-
-    @property
-    def action_for_windows(self):
-        return self.__action_for_windows
 
     def update_start_window(self):
         possible_actions = self.action_for_windows["start_window"]
