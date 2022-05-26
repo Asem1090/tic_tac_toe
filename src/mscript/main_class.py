@@ -11,10 +11,9 @@ class MainClass:
 
         self.__app = QApplication([])
 
-        windows_manager = WindowsManager()
-        windows_manager.set_start_window()
+        WindowsManager.set_start_window()
 
-        windows_manager.start_window_controller.start_window.show()
+        WindowsManager.windows["start_window"]["controller"].start_window.show()
 
     def run(self):
 
