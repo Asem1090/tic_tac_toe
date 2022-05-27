@@ -5,7 +5,12 @@ from src.windows.renderer import Renderer
 
 
 class WindowsManager:
-    windows = {}
+    __windows = {}
+
+    @classmethod
+    @property
+    def windows(cls):
+        return cls.__windows
 
     @classmethod
     def set_start_window(cls) -> None:

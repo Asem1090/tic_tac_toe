@@ -10,6 +10,8 @@ class StartWindowController(QMainWindow):
 
         self.__start_window = uic.loadUi("..\\..\\Dep\\UI\\start_window.ui")
 
+        self.start_window.setWindowTitle("Start Window")
+
     @property
     def start_window(self):
         return self.__start_window
