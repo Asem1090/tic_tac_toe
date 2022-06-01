@@ -10,13 +10,13 @@ class WindowsManager:
     @classmethod
     @property
     def windows(cls):
-        return cls.__windows
+        return WindowsManager.__windows
 
-    @classmethod
-    def set_start_window(cls) -> None:
+    @staticmethod
+    def set_start_window() -> None:
         WindowsManager.windows["start_window"] = {}
         WindowsManager.windows["start_window"]["controller"] = StartWindowController()
-        WindowsManager.windows["start_window"]["processor"] = StartWindowProcessor(cls)
+        WindowsManager.windows["start_window"]["processor"] = StartWindowProcessor(WindowsManager)
 
         Renderer.action_required["start_window"] = False
 
