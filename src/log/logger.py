@@ -27,7 +27,7 @@ class Logger:
 
     @staticmethod
     def info(message):
-        start_new_thread(Logger.__logger.debug, (Logger.message_correction(message),))
+        start_new_thread(Logger.__logger.info, (Logger.message_correction(message),))
 
     @staticmethod
     def warning(message):
