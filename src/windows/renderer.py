@@ -13,7 +13,7 @@ class Renderer:
         "start_window": False
     }
 
-    action_for_windows = {
+    actions_for_windows = {
         "start_window": {
             "pve_btn_pressed": False,
             "pvp_btn_pressed": False,
@@ -26,14 +26,13 @@ class Renderer:
     def up_to_date(cls):
         return Renderer.__up_to_date
 
-    # @classmethod
-    # @up_to_date.setter
-    # def up_to_date(self, value):
-    #     Renderer.__up_to_date = bool(value)
+    @staticmethod
+    def set_up_to_date(value):
+        Renderer.__up_to_date = bool(value)
 
     @staticmethod
     def update_start_window():
-        possible_actions = Renderer.action_for_windows["start_window"]
+        possible_actions = Renderer.actions_for_windows["start_window"]
 
         Logger.debug("Checking which button got pressed")
         if possible_actions["pvp_btn_pressed"]:
@@ -62,9 +61,19 @@ class Renderer:
         Logger.info("Running the renderer")
         while True:
             sleep(0.001)
+
             if Renderer.__up_to_date:
                 continue
 
+            Renderer.__up_to_date = True
+            Logger.info("Resetting Renderer.__up_to_date to True")
+
             if Renderer.action_required["start_window"]:
-                Logger.debug("Calling update_start_window")
-                Renderer.update_start_window()
+                Logger.debug("Calling update_start_window in a new thread")
+                start_new_thread(Renderer.update_start_window, ())
+
+    @staticmethod
+    def set_button_action_to_true(window_name, btn_name):
+        Logger.debug(f"Changing the action for {btn_name} in actions_for_windows to True")
+        Renderer.actions_for_windows[window_name][f"{btn_name}_pressed"] = True
+        Logger.info(f"The action for {btn_name} in actions_for_windows changed to True successfully")

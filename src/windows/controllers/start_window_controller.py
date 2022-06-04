@@ -18,10 +18,6 @@ class StartWindowController(QMainWindow):
         self.__start_window = uic.loadUi("..\\..\\Dep\\UI\\start_window.ui")
         Logger.info("Start window loaded successfully (from .ui file)")
 
-        Logger.debug("Setting start window title")
-        self.start_window.setWindowTitle("Start Window")
-        Logger.info("Start window title set successfully")
-
         Logger.info("StartWindowController initialized successfully")
 
     @property

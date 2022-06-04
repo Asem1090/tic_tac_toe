@@ -4,15 +4,17 @@ from src.mscript.main_class import MainClass
 
 
 def main():
-    Logger.debug("Program's beginning")
+    Logger.debug("Beginning of program")
 
     Logger.debug("Creating MainClass object")
     main_instance = MainClass()
+    Logger.info("MainClass object created")
 
     Logger.debug("Calling run from MainClass object")
     main_instance.run()
+    Logger.info("run called from MainClass object")
 
-    Logger.info("Program's end")
+    Logger.info("End of program")
 
 
 if __name__ == "__main__":

@@ -1,3 +1,6 @@
+# Built-in libs
+from sys import exit
+
 # External libs
 from PyQt6.QtWidgets import QApplication
 
@@ -10,6 +13,7 @@ from src.windows.windows_manager import WindowsManager
 class MainClass:
 
     def __init__(self):
+        Logger.debug("Initializing MainClass object")
 
         Logger.debug("Creating QApplication object")
         self.__app = QApplication([])
@@ -20,7 +24,7 @@ class MainClass:
 
         Logger.debug("Calling show for start window")
         WindowsManager.windows["start_window"]["controller"].start_window.show()
-        Logger.info("Show called successfully for start window")
+        Logger.info("show called successfully for start window")
 
         Logger.debug("Calling start from Renderer")
         Renderer.start()
@@ -36,5 +40,5 @@ class MainClass:
 
             exit(exit_code)
 
-        except SystemExit as E:
+        except SystemExit:
             Logger.exception("Exiting the system")
