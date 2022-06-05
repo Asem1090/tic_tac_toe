@@ -9,17 +9,9 @@ from src.log.logger import Logger
 class Renderer:
     __up_to_date = True
 
-    action_required = {
-        "start_window": False
-    }
+    action_required = {}
 
-    actions_for_windows = {
-        "start_window": {
-            "pve_btn_pressed": False,
-            "pvp_btn_pressed": False,
-            "local_network_btn_pressed": False
-        }
-    }
+    actions_for_windows = {}
 
     @classmethod
     @property
@@ -30,26 +22,26 @@ class Renderer:
     def set_up_to_date(value):
         Renderer.__up_to_date = bool(value)
 
-    @staticmethod
-    def update_start_window():
-        possible_actions = Renderer.actions_for_windows["start_window"]
-
-        Logger.debug("Checking which button got pressed")
-        if possible_actions["pvp_btn_pressed"]:
-            Logger.debug("Signalling to execute pvp_btn_pressed from start window processor")
-            # signal this function WindowsManager.windows["start_window"]["processor"].pvp_btn_pressed()
-
-        elif possible_actions["pve_btn_pressed"]:
-            Logger.debug("Signalling to execute pve_btn_pressed from start window processor")
-            # signal this function WindowsManager.windows["start_window"]["processor"].pve_btn_pressed()
-
-        elif possible_actions["local_network_btn_pressed"]:
-            Logger.debug("Signalling to execute local_network_btn_pressed from start window processor")
-            # signal this function WindowsManager.windows["start_window"]["processor"].local_network_btn_pressed()
-
-        Logger.debug("Resetting the values of possible actions for start window to False")
-        for action in possible_actions:
-            possible_actions[action] = False
+    # @staticmethod
+    # def update_start_window():
+    #     possible_actions = Renderer.actions_for_windows["start_window"]
+    #
+    #     Logger.debug("Checking which button got pressed")
+    #     if possible_actions["pvp_btn_pressed"]:
+    #         Logger.debug("Signalling to execute pvp_btn_pressed from start window processor")
+    #         # signal this function WindowsManager.windows["start_window"]["processor"].pvp_btn_pressed()
+    #
+    #     elif possible_actions["pve_btn_pressed"]:
+    #         Logger.debug("Signalling to execute pve_btn_pressed from start window processor")
+    #         # signal this function WindowsManager.windows["start_window"]["processor"].pve_btn_pressed()
+    #
+    #     elif possible_actions["local_network_btn_pressed"]:
+    #         Logger.debug("Signalling to execute local_network_btn_pressed from start window processor")
+    #         # signal this function WindowsManager.windows["start_window"]["processor"].local_network_btn_pressed()
+    #
+    #     Logger.debug("Resetting the values of possible actions for start window to False")
+    #     for action in possible_actions:
+    #         possible_actions[action] = False
 
     @staticmethod
     def start():
@@ -68,12 +60,12 @@ class Renderer:
             Renderer.__up_to_date = True
             Logger.info("Resetting Renderer.__up_to_date to True")
 
-            if Renderer.action_required["start_window"]:
-                Logger.debug("Calling update_start_window in a new thread")
-                start_new_thread(Renderer.update_start_window, ())
+            # if Renderer.action_required["start_window"]:
+            #     Logger.debug("Calling update_start_window in a new thread")
+            #     start_new_thread(Renderer.update_start_window, ())
 
     @staticmethod
-    def set_button_action_to_true(window_name, btn_name):
-        Logger.debug(f"Changing the action for {btn_name} in actions_for_windows to True")
-        Renderer.actions_for_windows[window_name][f"{btn_name}_pressed"] = True
-        Logger.info(f"The action for {btn_name} in actions_for_windows changed to True successfully")
+    def set_button_action_to_true(window_name, action_name):
+        Logger.debug(f"Changing {action_name} in actions_for_windows to True")
+        Renderer.actions_for_windows[window_name][action_name] = True
+        Logger.info(f"Changed {action_name} in actions_for_windows to True successfully")

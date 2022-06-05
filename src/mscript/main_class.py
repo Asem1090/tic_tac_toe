@@ -6,6 +6,7 @@ from PyQt6.QtWidgets import QApplication
 
 # Custom libs
 from src.log.logger import Logger
+from src.windows.processors.start_window_processor import StartWindowProcessor
 from src.windows.renderer import Renderer
 from src.windows.windows_manager import WindowsManager
 
@@ -20,10 +21,10 @@ class MainClass:
         Logger.info("QApplication object created successfully")
 
         Logger.debug("Calling set_start_window from WindowsManager")
-        WindowsManager.set_start_window()
+        WindowsManager.set_window("start_window", "..\\..\\Dep\\UI\\start_window.ui", StartWindowProcessor)
 
         Logger.debug("Calling show for start window")
-        WindowsManager.windows["start_window"]["controller"].start_window.show()
+        WindowsManager.windows["start_window"]["controller"].window.show()
         Logger.info("show called successfully for start window")
 
         Logger.debug("Calling start from Renderer")
