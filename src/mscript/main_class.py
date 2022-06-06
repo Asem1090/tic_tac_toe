@@ -21,7 +21,7 @@ class MainClass:
         Logger.info("QApplication object created successfully")
 
         Logger.debug("Calling set_window from WindowsManager")
-        WindowsManager.set_window("start_window", "..\\..\\Dep\\UI\\start_window.ui", StartWindowProcessor)
+        WindowsManager.set_window("start_window", StartWindowProcessor)
 
         Logger.debug("Calling show for start window")
         WindowsManager.get_window("start_window").show()

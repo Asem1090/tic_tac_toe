@@ -3,6 +3,7 @@ from typing import TYPE_CHECKING
 
 # Custom libs
 from src.log.logger import Logger
+from src.windows.processors.game_window_processor import GameWindowProcessor
 from src.windows.processors.processor import Processor
 
 if TYPE_CHECKING:
@@ -19,10 +20,11 @@ class StartWindowProcessor(Processor):
         )
 
     def pvp_btn_pressed(self) -> None:
-        Logger.debug("pvp_btn_pressed called")
+        self.windows_manager.set_window("game_window", GameWindowProcessor)
+        Logger.info("pvp_btn_pressed called successfully")
 
     def pve_btn_pressed(self) -> None:
-        Logger.debug("pve_btn_pressed called")
+        Logger.info("pve_btn_pressed called successfully")
 
     def local_network_btn_pressed(self) -> None:
-        Logger.debug("local_network_btn_pressed called")
+        Logger.info("local_network_btn_pressed called successfully")

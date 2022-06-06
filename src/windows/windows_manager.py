@@ -42,12 +42,15 @@ class WindowsManager:
         return window
 
     @staticmethod
-    def set_window(window_name: str, ui_file_path: str, processor: processor_subclass) -> None:
+    def set_window(window_name: str, processor: processor_subclass, ui_file_path: str = None) -> None:
         Logger.debug(f"Creating {window_name} controller and processor objects")
 
         WindowsManager.__windows[window_name] = {}
 
         Logger.debug("Creating Controller object")
+        if ui_file_path is None:
+            ui_file_path = f"..\\..\\Dep\\UI\\{window_name}.ui"
+
         WindowsManager.__windows[window_name]["controller"] = Controller(ui_file_path)
         Logger.info("Created Controller object successfully")
 
