@@ -7,7 +7,6 @@ from PyQt6.QtWidgets import QApplication
 # Custom libs
 from src.log.logger import Logger
 from src.windows.processors.start_window_processor import StartWindowProcessor
-from src.windows.renderer import Renderer
 from src.windows.windows_manager import WindowsManager
 
 

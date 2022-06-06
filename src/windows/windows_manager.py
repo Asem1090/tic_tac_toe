@@ -3,7 +3,7 @@ from sys import exit
 from typing import Type, TypeVar
 
 # External libs
-from PyQt6.QtWidgets import QWidget
+from PyQt6.QtWidgets import QMainWindow
 
 # Custom libs
 from src.log.logger import Logger
@@ -16,10 +16,10 @@ processor_subclass = TypeVar("processor_subclass", bound=Type[Processor])
 class WindowsManager:
     __windows = {}
 
-    @staticmethod
-    def __get_controller(window_name: str) -> Controller:
+    @classmethod
+    def __get_controller(cls, window_name: str) -> Controller:
         Logger.debug(f"Getting {window_name} controller")
-        window_controller: Controller = WindowsManager.__windows[window_name]["controller"]
+        window_controller: Controller = cls.__windows[window_name]["controller"]
         Logger.info(f"{window_name} controller accessed successfully")
 
         try:
@@ -32,29 +32,29 @@ class WindowsManager:
 
         return window_controller
 
-    @staticmethod
-    def get_window(window_name: str) -> QWidget:
+    @classmethod
+    def get_window(cls, window_name: str) -> QMainWindow:
         Logger.debug(f"Getting {window_name} from {window_name} controller")
-        window = WindowsManager.__get_controller(window_name).window
+        window = cls.__get_controller(window_name).window
         Logger.info(f"{window_name} accessed successfully from {window_name} controller")
 
         Logger.info(f"Returning {window_name}")
         return window
 
-    @staticmethod
-    def set_window(window_name: str, processor: processor_subclass, ui_file_path: str = None) -> None:
+    @classmethod
+    def set_window(cls, window_name: str, processor: processor_subclass, ui_file_path: str = None) -> None:
         Logger.debug(f"Creating {window_name} controller and processor objects")
 
-        WindowsManager.__windows[window_name] = {}
+        cls.__windows[window_name] = {}
 
         Logger.debug("Creating Controller object")
         if ui_file_path is None:
             ui_file_path = f"..\\..\\Dep\\UI\\{window_name}.ui"
 
-        WindowsManager.__windows[window_name]["controller"] = Controller(ui_file_path)
+        cls.__windows[window_name]["controller"] = Controller(ui_file_path)
         Logger.info("Created Controller object successfully")
 
         Logger.debug(f"Creating {window_name} processor object")
-        WindowsManager.__windows[window_name]["processor"] = processor(WindowsManager)
+        cls.__windows[window_name]["processor"] = processor(cls)
         Logger.info(f"Created {window_name} processor object successfully")
 

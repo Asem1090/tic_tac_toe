@@ -105,6 +105,12 @@
             <verstretch>0</verstretch>
            </sizepolicy>
           </property>
+          <property name="font">
+           <font>
+            <family>Microsoft Tai Le</family>
+            <pointsize>50</pointsize>
+           </font>
+          </property>
           <property name="text">
            <string/>
           </property>
@@ -117,6 +123,12 @@
             <horstretch>0</horstretch>
             <verstretch>0</verstretch>
            </sizepolicy>
+          </property>
+          <property name="font">
+           <font>
+            <family>Microsoft Tai Le</family>
+            <pointsize>50</pointsize>
+           </font>
           </property>
           <property name="text">
            <string/>
@@ -131,6 +143,12 @@
             <verstretch>0</verstretch>
            </sizepolicy>
           </property>
+          <property name="font">
+           <font>
+            <family>Microsoft Tai Le</family>
+            <pointsize>50</pointsize>
+           </font>
+          </property>
           <property name="text">
            <string/>
           </property>
@@ -144,6 +162,14 @@
             <verstretch>0</verstretch>
            </sizepolicy>
           </property>
+          <property name="font">
+           <font>
+            <family>Microsoft Tai Le</family>
+            <pointsize>50</pointsize>
+            <weight>75</weight>
+            <bold>true</bold>
+           </font>
+          </property>
           <property name="text">
            <string/>
           </property>
@@ -156,6 +182,12 @@
             <horstretch>0</horstretch>
             <verstretch>0</verstretch>
            </sizepolicy>
+          </property>
+          <property name="font">
+           <font>
+            <family>Microsoft Tai Le</family>
+            <pointsize>50</pointsize>
+           </font>
           </property>
           <property name="autoFillBackground">
            <bool>false</bool>
@@ -176,6 +208,12 @@
             <verstretch>0</verstretch>
            </sizepolicy>
           </property>
+          <property name="font">
+           <font>
+            <family>Microsoft Tai Le</family>
+            <pointsize>50</pointsize>
+           </font>
+          </property>
           <property name="text">
            <string/>
           </property>
@@ -188,6 +226,12 @@
             <horstretch>0</horstretch>
             <verstretch>0</verstretch>
            </sizepolicy>
+          </property>
+          <property name="font">
+           <font>
+            <family>Microsoft Tai Le</family>
+            <pointsize>50</pointsize>
+           </font>
           </property>
           <property name="text">
            <string/>
@@ -202,6 +246,12 @@
             <verstretch>0</verstretch>
            </sizepolicy>
           </property>
+          <property name="font">
+           <font>
+            <family>Microsoft Tai Le</family>
+            <pointsize>50</pointsize>
+           </font>
+          </property>
           <property name="text">
            <string/>
           </property>
@@ -214,6 +264,12 @@
             <horstretch>0</horstretch>
             <verstretch>0</verstretch>
            </sizepolicy>
+          </property>
+          <property name="font">
+           <font>
+            <family>Microsoft Tai Le</family>
+            <pointsize>50</pointsize>
+           </font>
           </property>
           <property name="text">
            <string/>
