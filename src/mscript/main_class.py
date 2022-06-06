@@ -20,19 +20,16 @@ class MainClass:
         self.__app = QApplication([])
         Logger.info("QApplication object created successfully")
 
-        Logger.debug("Calling set_start_window from WindowsManager")
+        Logger.debug("Calling set_window from WindowsManager")
         WindowsManager.set_window("start_window", "..\\..\\Dep\\UI\\start_window.ui", StartWindowProcessor)
 
         Logger.debug("Calling show for start window")
-        WindowsManager.windows["start_window"]["controller"].window.show()
+        WindowsManager.get_window("start_window").show()
         Logger.info("show called successfully for start window")
-
-        Logger.debug("Calling start from Renderer")
-        Renderer.start()
 
         Logger.info("MainClass initialized successfully")
 
-    def run(self):
+    def run(self) -> None:
 
         try:
             Logger.info("Executing the application / Displaying start window")

@@ -3,7 +3,7 @@ from src.log.logger import Logger
 from src.mscript.main_class import MainClass
 
 
-def main():
+def main() -> None:
     Logger.debug("Beginning of program")
 
     Logger.debug("Creating MainClass object")

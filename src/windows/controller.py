@@ -14,9 +14,9 @@ class Controller(QMainWindow):
         Logger.info("The super class' constructor of Controller called successfully")
 
         Logger.debug(f"Loading {path}")
-        self.__window = uic.loadUi(path)
+        self.__window: QMainWindow = uic.loadUi(path)
         Logger.info(f"{path} loaded successfully")
 
     @property
-    def window(self):
+    def window(self) -> QMainWindow:
         return self.__window

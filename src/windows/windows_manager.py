@@ -1,56 +1,57 @@
 # Built-in libs
 from sys import exit
+from typing import Type, TypeVar
+
+# External libs
+from PyQt6.QtWidgets import QWidget
 
 # Custom libs
 from src.log.logger import Logger
 from src.windows.controller import Controller
+from src.windows.processors.processor import Processor
 
-
-# External libs
+processor_subclass = TypeVar("processor_subclass", bound=Type[Processor])
 
 
 class WindowsManager:
     __windows = {}
 
-    @classmethod
-    @property
-    def windows(cls):
-        return WindowsManager.__windows
-
     @staticmethod
-    def get_window(window_name) -> Controller:
-        # Accessing controller
+    def __get_controller(window_name: str) -> Controller:
         Logger.debug(f"Getting {window_name} controller")
-        window_controller = WindowsManager.windows[window_name]["controller"]
+        window_controller: Controller = WindowsManager.__windows[window_name]["controller"]
         Logger.info(f"{window_name} controller accessed successfully")
 
         try:
             if window_controller is None:
-                raise AttributeError(f"WindowsManager.windows[{window_name}][\"controller\"] is None")
+                raise AttributeError(f"WindowsManager.__windows[{window_name}][\"controller\"] is None")
 
         except AttributeError:
             Logger.exception(f"{window_name} controller is None")
             exit(-1)
 
-        # Accessing start window
+        return window_controller
+
+    @staticmethod
+    def get_window(window_name: str) -> QWidget:
         Logger.debug(f"Getting {window_name} from {window_name} controller")
-        window = window_controller.window
+        window = WindowsManager.__get_controller(window_name).window
         Logger.info(f"{window_name} accessed successfully from {window_name} controller")
 
         Logger.info(f"Returning {window_name}")
         return window
 
     @staticmethod
-    def set_window(window_name, ui_file_path, processor) -> None:
+    def set_window(window_name: str, ui_file_path: str, processor: processor_subclass) -> None:
         Logger.debug(f"Creating {window_name} controller and processor objects")
 
-        WindowsManager.windows[window_name] = {}
+        WindowsManager.__windows[window_name] = {}
 
         Logger.debug("Creating Controller object")
-        WindowsManager.windows[window_name]["controller"] = Controller(ui_file_path)
+        WindowsManager.__windows[window_name]["controller"] = Controller(ui_file_path)
         Logger.info("Created Controller object successfully")
 
         Logger.debug(f"Creating {window_name} processor object")
-        WindowsManager.windows[window_name]["processor"] = processor(WindowsManager)
+        WindowsManager.__windows[window_name]["processor"] = processor(WindowsManager)
         Logger.info(f"Created {window_name} processor object successfully")
 
