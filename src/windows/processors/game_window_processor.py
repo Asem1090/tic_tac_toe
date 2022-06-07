@@ -26,7 +26,7 @@ class GameWindowProcessor(Processor):
         )
 
     def x_o_btn_pressed(self) -> None:
-        btn = self.windows_manager.get_window(self.window_name).sender()
+        btn = self._windows_manager.get_window(self._window_name).sender()
         btn.setText("X")
         btn.setDisabled(True)
         Logger.info("x_o_btn_pressed called successfully")
@@ -44,4 +44,16 @@ class GameWindowProcessor(Processor):
         Logger.info("reset_round_btn_pressed called successfully")
 
     def leave_btn_pressed(self) -> None:
+        Logger.debug("Getting game_window")
+        game_window = self._windows_manager.get_window("game_window")
+        Logger.info("Got game_window")
+
+        Logger.debug("Closing game_window")
+        game_window.close()
+        Logger.info("Closed game_window successfully")
+
+        Logger.debug("Calling show for start_window")
+        self._windows_manager.get_window("start_window").show()
+        Logger.info("Called show for start_window successfully")
+
         Logger.info("leave_btn_pressed called successfully")

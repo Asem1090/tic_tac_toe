@@ -7,7 +7,8 @@ from PyQt6.QtWidgets import QMainWindow
 
 # Custom libs
 from src.log.logger import Logger
-from src.windows.controller import Controller
+from src.windows.controllers.dialog_controller import DialogController
+from src.windows.controllers.main_window_controller import MainWindowController
 from src.windows.processors.processor import Processor
 
 processor_subclass = TypeVar("processor_subclass", bound=Type[Processor])
@@ -17,9 +18,9 @@ class WindowsManager:
     __windows = {}
 
     @classmethod
-    def __get_controller(cls, window_name: str) -> Controller:
+    def __get_controller(cls, window_name: str) -> MainWindowController:
         Logger.debug(f"Getting {window_name} controller")
-        window_controller: Controller = cls.__windows[window_name]["controller"]
+        window_controller: MainWindowController = cls.__windows[window_name]["controller"]
         Logger.info(f"{window_name} controller accessed successfully")
 
         try:
@@ -42,17 +43,33 @@ class WindowsManager:
         return window
 
     @classmethod
-    def set_window(cls, window_name: str, processor: processor_subclass, ui_file_path: str = None) -> None:
+    def set_window(
+            cls, window_name: str, processor: processor_subclass,
+            window_type: str = "QMainWindow", ui_file_path: str = None
+    ) -> None:
+
+        if window_name in cls.__windows.keys():
+            Logger.info("Window already exists")
+            return
+
         Logger.debug(f"Creating {window_name} controller and processor objects")
 
         cls.__windows[window_name] = {}
 
-        Logger.debug("Creating Controller object")
         if ui_file_path is None:
             ui_file_path = f"..\\..\\Dep\\UI\\{window_name}.ui"
 
-        cls.__windows[window_name]["controller"] = Controller(ui_file_path)
-        Logger.info("Created Controller object successfully")
+        if window_type == "QMainWindow":
+            Logger.debug("Creating MainWindowController object")
+            cls.__windows[window_name]["controller"] = MainWindowController(ui_file_path)
+            Logger.info("Created MainWindowController object successfully")
+        elif window_type == "QDialog":
+            Logger.debug("Creating MainWindowController object")
+            cls.__windows[window_name]["controller"] = DialogController(ui_file_path)
+            Logger.info("Created MainWindowController object successfully")
+        else:
+            Logger.warning("WRONG WINDOW TYPE!")
+            return
 
         Logger.debug(f"Creating {window_name} processor object")
         cls.__windows[window_name]["processor"] = processor(cls)

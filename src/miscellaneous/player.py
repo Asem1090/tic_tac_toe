@@ -14,16 +14,19 @@ class Player:
         frozenset({1, 5, 9}), frozenset({3, 5, 7})  # diagonals
     })
 
-    players_count = 0
+    player_1 = None
+    player_2 = None
 
-    def __new__(cls, *args, **kwargs):
-        cls.players_count += 1
-
-    def __init__(self, name: str = f"Player{players_count}"):
+    def __init__(self, name: str):
         self.__name = name
         self.__score = 0
         self.__mark = None
         self.__marked_spaces = set()
+
+        if (player_1 := Player.player_1) is None:
+            player_1 = self
+        elif (player_2 := Player.player_2) is None:
+            player_2 = self
 
     @property
     def mark(self) -> str:

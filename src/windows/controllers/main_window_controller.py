@@ -6,7 +6,7 @@ from PyQt6.QtWidgets import QMainWindow
 from src.log.logger import Logger
 
 
-class Controller(QMainWindow):
+class MainWindowController(QMainWindow):
 
     def __init__(self, path: str):
         Logger.debug("Calling the super class' constructor of Controller")
