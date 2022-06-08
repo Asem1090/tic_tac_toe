@@ -15,7 +15,7 @@ if TYPE_CHECKING:
 class Processor:
 
     def __init__(self, windows_manager: "WindowsManager", window_name: str, *args: str, **kwargs: Callable[[], None]):
-        self._buttons = {}
+        self._buttons = {}  # {Button Name: Button Object}
         self._window_name = window_name
         self._windows_manager = windows_manager
 

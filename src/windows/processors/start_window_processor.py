@@ -35,7 +35,7 @@ class StartWindowProcessor(Processor):
         Logger.info("Created game_window successfully")
 
         Logger.debug("Calling show for game_window")
-        self._windows_manager.get_window("game_window").show()
+        self._windows_manager.get_processor("game_window").show_game_window()
         Logger.info("Called show for game_window successfully")
 
         Logger.info("pvp_btn_pressed called successfully")

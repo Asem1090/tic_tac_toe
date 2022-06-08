@@ -7,8 +7,6 @@ from src.mscript.main_class import MainClass
 
 
 def main() -> None:
-    Logger.debug("Beginning of program")
-
     Logger.debug("Creating MainClass object")
     main_instance = MainClass()
     Logger.info("MainClass object created")
@@ -16,8 +14,6 @@ def main() -> None:
     Logger.debug("Calling run from MainClass object")
     main_instance.run()
     Logger.info("run called from MainClass object")
-
-    Logger.info("End of actual program")
 
     Logger.debug("Looping inside the threads")
     for thread in thread_enumerate():

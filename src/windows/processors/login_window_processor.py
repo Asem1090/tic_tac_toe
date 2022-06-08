@@ -2,8 +2,9 @@
 from PyQt6.QtWidgets import QLineEdit
 
 # Custom libs
+from src.game.game_manager import GameManager
 from src.log.logger import Logger
-from src.miscellaneous.player import Player
+from src.game.player import Player
 from src.windows.processors.processor import Processor
 from src.windows.windows_manager import WindowsManager
 
@@ -24,7 +25,10 @@ class LoginWindowProcessor(Processor):
         password = window.findChild(QLineEdit, "password_line_edit")
 
         if self.passwordMatch(username, password):
-            Player(username.text())
+            if window.windowTitle() == "Player 1 Login":
+                GameManager.player_1 = Player(username.text())
+            elif window.windowTitle() == "Player 2 Login":
+                GameManager.player_2 = Player(username.text())
 
         self._windows_manager.get_window(self._window_name).close()
 

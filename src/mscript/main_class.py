@@ -5,6 +5,8 @@ from sys import exit
 from PyQt6.QtWidgets import QApplication
 
 # Custom libs
+from src.game.game_manager import GameManager
+from src.game.player import Player
 from src.log.logger import Logger
 from src.windows.processors.start_window_processor import StartWindowProcessor
 from src.windows.windows_manager import WindowsManager
@@ -13,7 +15,9 @@ from src.windows.windows_manager import WindowsManager
 class MainClass:
 
     def __init__(self):
-        Logger.debug("Initializing MainClass object")
+        # Setting default players
+        GameManager.player_1 = Player("Player 1")
+        GameManager.player_2 = Player("Player 2")
 
         Logger.debug("Creating QApplication object")
         self.__app = QApplication([])
@@ -26,14 +30,11 @@ class MainClass:
         WindowsManager.get_window("start_window").show()
         Logger.info("show called successfully for start window")
 
-        Logger.info("MainClass initialized successfully")
-
     def run(self) -> None:
 
         try:
             Logger.info("Executing the application / Displaying start window")
             exit_code = self.__app.exec()
-            Logger.info("Application execution complete")
 
             exit(exit_code)
 
