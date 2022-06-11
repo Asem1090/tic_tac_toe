@@ -17,7 +17,6 @@ def main() -> None:
 
     main_instance.run()
 
-    Logger.debug("Looping through working threads")
     for thread in thread_enumerate():
         if thread.name != "MainThread":
             Logger.threadless_debug(f"Waiting for {thread.name} to finish")
