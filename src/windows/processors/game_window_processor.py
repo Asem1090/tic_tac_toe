@@ -86,10 +86,9 @@ class GameWindowProcessor(Processor):
         player_1 = GameManager.player_1
         player_2 = GameManager.player_2
 
+        GameManager.set_marks()
+
         self.player_1_label.setText(f"{player_1.name} ({player_1.mark})\n{player_1.score}")
         self.player_2_label.setText(f"{player_2.name} ({player_2.mark})\n{player_2.score}")
 
-        GameManager.set_marks()
-
-        Logger.debug("Calling show for game_window")
         self.game_window.show()

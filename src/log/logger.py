@@ -23,6 +23,10 @@ class Logger:
         return message
 
     @classmethod
+    def threadless_debug(cls, message: str) -> None:
+        cls.__logger.debug(cls.message_correction(message))
+
+    @classmethod
     def debug(cls, message: str) -> None:
         Thread(daemon=True, target=cls.__logger.debug, args=(cls.message_correction(message),)).start()
 

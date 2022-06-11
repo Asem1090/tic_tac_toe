@@ -33,11 +33,8 @@ class Player:
 
     @mark.setter
     def mark(self, value: Literal['X', 'O']) -> None:
-        try:
-            if value != 'X' and value != 'O':
-                raise ValueError(f"Cannot set mark to {value}. Value must be 'X' or 'O'.")
-        except ValueError:
-            Logger.exception("Error in setting value for mark")
+        if value not in frozenset({'X', 'O'}):
+            Logger.error(f"Cannot set mark to {value}. Value must be 'X' or 'O'.")
 
         self.__mark = value
 
@@ -48,17 +45,12 @@ class Player:
         self.__score = 0
 
     def add_marked_space(self, value: int) -> bool:
-        Logger.debug("add_marked")  # Fix
-        try:
-            if not isinstance(value, int):
-                raise AttributeError("Value must be int")
-            if value < 1 or value > 9:
-                raise ValueError("Value must be a number from 1 to 9")
-        except AttributeError or ValueError:
-            Logger.exception("Could not add value to marked_spaces")
-            exit(1)
+        if not (isinstance(value, int) or value in range(1, 10)):
+            Logger.error(f"Got unexpected value: {value!r}")
+            return False
 
         self.__marked_spaces.add(value)
         GameManager.increment_buttons_pressed()
-
         return GameManager.win_check(value)
+
+

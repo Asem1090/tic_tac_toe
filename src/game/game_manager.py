@@ -7,7 +7,7 @@ if TYPE_CHECKING:
 
 
 class GameManager:
-    # Include rows, columns and both diagonals
+    # Includes rows, columns and both diagonals
     win_lines = frozenset({
         frozenset({1, 2, 3}), frozenset({4, 5, 6}), frozenset({7, 8, 9}),  # rows
         frozenset({1, 4, 7}), frozenset({2, 5, 8}), frozenset({3, 6, 9}),  # columns
@@ -40,22 +40,16 @@ class GameManager:
 
     @classmethod
     def switch_current_player(cls) -> None:
-        cls.current_player = cls.current_player.next
         cls.current_player = cls.player_1 \
             if (cls.current_player is cls.player_2)\
             else cls.player_2
 
     # CHECK SPEED FROZENSET OR SET
     @classmethod
-    def get_possible_win_lines(cls, value: int) -> set[frozenset[int]]:
-        lines = set()
-
+    def get_possible_win_lines(cls, value: int) -> frozenset[int]:
         for line in cls.win_lines:
             if value in line:
-                lines.add(
-                    line.difference({value})  # Removing the value from the line
-                )
-        return lines
+                yield line.difference({value})
 
     @classmethod
     def win_check(cls, value: int) -> bool:
