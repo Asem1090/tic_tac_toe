@@ -17,23 +17,28 @@ class GameWindowProcessor(Processor):
     btn_to_num = {f"btn_{i}": i for i in range(1, 10)}
 
     def __init__(self, windows_manager: "WindowsManager"):
-        player_1 = None
-        player_2 = None
+        # player_1 = None
+        # player_2 = None
 
         super().__init__(
             windows_manager, "game_window",
             **{f"btn_{i}": self.x_o_btn_pressed for i in range(1, 10)},
-            **{"set_timer_btn": self.set_timer_btn_pressed,
-               "start_stop_timer_btn": self.start_stop_timer_pressed,
-               "reset_game_btn": self.reset_game_btn_pressed,
-               "reset_round_btn": self.reset_round_btn_pressed,
-               "leave_btn": self.leave_btn_pressed}
+            set_timer_btn= self.set_timer_btn_pressed,
+            start_stop_timer_btn= self.start_stop_timer_pressed,
+            reset_game_btn= self.reset_game_btn_pressed,
+            reset_round_btn= self.reset_round_btn_pressed,
+            leave_btn= self.leave_btn_pressed
         )
 
         self.game_window = self._windows_manager.get_window("game_window")
 
         self.player_1_label = self.game_window.findChild(QLabel, "player_1_label")
+        if self.player_1_label is None:
+            Logger.warning("player_1_label is None")
+
         self.player_2_label = self.game_window.findChild(QLabel, "player_2_label")
+        if self.player_2_label is None:
+            Logger.warning("player_2_label is None")
 
     def x_o_btn_pressed(self) -> None:
         current_player = GameManager.current_player
@@ -48,10 +53,9 @@ class GameWindowProcessor(Processor):
 
         Logger.debug("Checking if win or draw")
         if current_player.add_marked_space(self.btn_to_num[btn.objectName()]):
-            Logger.info(f"{current_player.name} has won")  # Show win window
-        elif GameManager.draw_check():
-            Logger.info(f"Draw")
-            pass  # Show draw window
+            Logger.critical(f"{current_player.name} has won")  # Show win window
+        elif GameManager.tie_check():
+            Logger.critical("Draw")  # Show draw window
 
         GameManager.switch_current_player()
 
@@ -79,10 +83,12 @@ class GameWindowProcessor(Processor):
         Logger.info("Called show for start_window successfully")
 
     def show_game_window(self):
-        # Logger.debug(f"Changing players labels {GameManager.player_1.name}")
-        # self.player_1_label.setText(GameManager.player_1.name)
-        # self.player_2_label.setText(GameManager.player_2.name)
-        # Logger.info("Changed players labels")
+        player_1 = GameManager.player_1
+        player_2 = GameManager.player_2
+
+        self.player_1_label.setText(f"{player_1.name} ({player_1.mark})\n{player_1.score}")
+        self.player_2_label.setText(f"{player_2.name} ({player_2.mark})\n{player_2.score}")
+
         GameManager.set_marks()
 
         Logger.debug("Calling show for game_window")

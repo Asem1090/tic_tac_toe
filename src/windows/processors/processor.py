@@ -21,11 +21,9 @@ class Processor:
 
         Logger.debug("Calling add_and_connect_button_to_renderer(*args)")
         self.add_and_connect_button_to_renderer(*args)
-        Logger.info("Called add_and_connect_button_to_renderer(*args) successfully")
 
         Logger.debug("Calling add_and_connect_button_to_func(**kwargs)")
         self.add_and_connect_button_to_func(**kwargs)
-        Logger.info("Called add_and_connect_button_to_func(**kwargs) successfully")
 
     @property
     def windows_manager(self):
@@ -36,36 +34,25 @@ class Processor:
         return self._window_name
 
     def button_exist(self, btn_name: str) -> bool:
-        Logger.debug(f"Checking if {btn_name} is None")
         # btn_name is always in buttons.keys(), no need to check.
-        if self._buttons[btn_name] is None:
-            Logger.info(f"Did not find {btn_name}")
-            return False
-        else:
-            Logger.info(f"Found {btn_name}")
-            return True
+        return self._buttons[btn_name] is not None
 
     def add_and_connect_button_to_func(self, **kwargs: Callable[[], None]) -> None:
         window = self._windows_manager.get_window(self._window_name)
 
         for btn_name in kwargs:
-            Logger.debug(f"Getting {btn_name}")
             self._buttons[btn_name] = window.findChild(QPushButton, btn_name)
-            Logger.info(f"{btn_name} accessed successfully (possibly None)")
 
-            Logger.debug(f"Checking if {btn_name} exists")
             if self.button_exist(btn_name):
                 Logger.info(f"{btn_name} exists (not None)")
 
-                Logger.debug(f"Connecting {btn_name} to the provided function for the button")
-                self._buttons[btn_name].clicked.connect(kwargs[btn_name])
-                Logger.info(f"Connected {btn_name} to the provided function for the button successfully")
+                try:
+                    self._buttons[btn_name].clicked.connect(kwargs[btn_name])
+                except TypeError:
+                    Logger.exception(f"Could not connect {btn_name} to provided function")
             else:
                 Logger.info(f"{btn_name} is None")
-
-                Logger.debug(f"Deleting {btn_name} from buttons")
-                self._buttons.pop(btn_name)
-                Logger.info(f"Deleted {btn_name} from buttons")
+                del self._buttons[btn_name]
 
     def add_and_connect_button_to_renderer(self, *args: str) -> None:
 

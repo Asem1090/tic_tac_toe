@@ -19,28 +19,18 @@ class WindowsManager:
 
     @classmethod
     def __get_controller(cls, window_name: str) -> controller:
-        Logger.debug(f"Getting {window_name} controller")
-        window_controller: controller = cls.__windows[window_name]["controller"]
-        Logger.info(f"{window_name} controller accessed successfully")
-
-        return window_controller
+        Logger.info(f"Accessing and returning {window_name} controller")
+        return cls.__windows[window_name]["controller"]
 
     @classmethod
     def get_processor(cls, window_name: str) -> processor_subclass:
-        Logger.debug(f"Getting {window_name} processor")
-        window_processor: processor_subclass = cls.__windows[window_name]["processor"]
-        Logger.info(f"{window_name} processor accessed successfully")
-
-        return window_processor
+        Logger.info(f"Accessing and returning {window_name} processor")
+        return cls.__windows[window_name]["processor"]
 
     @classmethod
     def get_window(cls, window_name: str) -> QMainWindow:
-        Logger.debug(f"Getting {window_name} from {window_name} controller")
-        window = cls.__get_controller(window_name).window
-        Logger.info(f"{window_name} accessed successfully from {window_name} controller")
-
-        Logger.info(f"Returning {window_name}")
-        return window
+        Logger.info(f"Accessing {window_name} from {window_name} controller and returning it")
+        return cls.__get_controller(window_name).window
 
     @classmethod
     def set_window(
@@ -48,20 +38,19 @@ class WindowsManager:
             window_type: str = "QMainWindow", ui_file_path: str = None
     ) -> None:
 
-        if window_name in cls.__windows.keys():
-            Logger.info("Window already exists")
+        if cls.window_exists(window_name):
             return
-
-        cls.__windows[window_name] = {}
 
         if ui_file_path is None:
             ui_file_path = f"..\\..\\Dep\\UI\\{window_name}.ui"
 
         if window_type == "QMainWindow":
+            cls.__windows[window_name] = {}
             Logger.debug("Creating MainWindowController object")
             cls.__windows[window_name]["controller"] = MainWindowController(ui_file_path)
             Logger.info("Created MainWindowController object successfully")
         elif window_type == "QDialog":
+            cls.__windows[window_name] = {}
             Logger.debug("Creating DialogController object")
             cls.__windows[window_name]["controller"] = DialogController(ui_file_path)
             Logger.info("Created DialogController object successfully")
@@ -72,3 +61,11 @@ class WindowsManager:
         Logger.debug(f"Creating {window_name} processor object")
         cls.__windows[window_name]["processor"] = processor(cls)
         Logger.info(f"Created {window_name} processor object successfully")
+
+    @classmethod
+    def window_exists(cls, window_name: str) -> bool:
+        if window_name in cls.__windows.keys():
+            Logger.info("Window exists")
+            return True
+        Logger.info("Window does not exist")
+        return False

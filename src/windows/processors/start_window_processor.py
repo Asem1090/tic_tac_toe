@@ -22,23 +22,15 @@ class StartWindowProcessor(Processor):
         )
 
     def pvp_btn_pressed(self) -> None:
-        Logger.debug("Getting start_window")
-        start_window = self._windows_manager.get_window("start_window")
-        Logger.info("Got start_window")
+        Logger.debug("Accessing and closing start_window")
+        self._windows_manager.get_window("start_window").close()
+        Logger.info(f"Closed start_window successfully")
 
-        Logger.debug("Closing start_window")
-        start_window.close()
-        Logger.info("Closed start_window successfully")
-
-        Logger.debug("Creating game_window")
+        Logger.info("Calling set_window from WindowsManager for game_window")
         self._windows_manager.set_window("game_window", GameWindowProcessor)
-        Logger.info("Created game_window successfully")
 
-        Logger.debug("Calling show for game_window")
+        Logger.info("Calling show for game_window")
         self._windows_manager.get_processor("game_window").show_game_window()
-        Logger.info("Called show for game_window successfully")
-
-        Logger.info("pvp_btn_pressed called successfully")
 
     def pve_btn_pressed(self) -> None:
         Logger.info("pve_btn_pressed called successfully")
@@ -47,16 +39,14 @@ class StartWindowProcessor(Processor):
         Logger.info("local_network_btn_pressed called successfully")
 
     def player_login_btn_pressed(self, title):
-        Logger.debug("Creating login_window")
+        Logger.info("Calling set_window from WindowsManager for login_window")
         self._windows_manager.set_window("login_window", LoginWindowProcessor)
-        Logger.info("Created login_window successfully")
 
         login_window = self._windows_manager.get_window("login_window")
         login_window.setWindowTitle(title)
 
-        Logger.debug("Calling show for login_window")
+        Logger.info("Calling show for login_window")
         login_window.show()
-        Logger.info("Called show for login_window successfully")
 
     def player_1_login_btn_pressed(self):
         self.player_login_btn_pressed("Player 1 Login")

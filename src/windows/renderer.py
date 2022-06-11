@@ -27,36 +27,12 @@ class Renderer:
         cls.__actions_for_windows[window_name][action_name] = True
         Logger.info(f"Changed {action_name} in actions_for_windows to True successfully")
 
-    # @staticmethod
-    # def update_start_window():
-    #     possible_actions = Renderer.actions_for_windows["start_window"]
-    #
-    #     Logger.debug("Checking which button got pressed")
-    #     if possible_actions["pvp_btn_pressed"]:
-    #         Logger.debug("Signalling to execute pvp_btn_pressed from start window processor")
-    #         # signal this function WindowsManager.windows["start_window"]["processor"].pvp_btn_pressed()
-    #
-    #     elif possible_actions["pve_btn_pressed"]:
-    #         Logger.debug("Signalling to execute pve_btn_pressed from start window processor")
-    #         # signal this function WindowsManager.windows["start_window"]["processor"].pve_btn_pressed()
-    #
-    #     elif possible_actions["local_network_btn_pressed"]:
-    #         Logger.debug("Signalling to execute local_network_btn_pressed from start window processor")
-    #         # signal this function WindowsManager.windows["start_window"]["processor"].local_network_btn_pressed()
-    #
-    #     Logger.debug("Resetting the values of possible actions for start window to False")
-    #     for action in possible_actions:
-    #         possible_actions[action] = False
-
     @classmethod
     def start(cls) -> bool:
         Logger.debug("Starting the renderer in a new thread")
-        Thread(target=cls.run, args=())
+        Thread(daemon=True, target=cls.run, args=())
 
-        Logger.debug("Changing start to lambda: False")
         cls.start = lambda: False
-        Logger.info("Changed start to lambda: False successfully")
-
         return True
 
     @classmethod
@@ -68,11 +44,8 @@ class Renderer:
             if cls.__up_to_date:
                 continue
 
-            Logger.debug("Resetting Renderer.__up_to_date to True")
             cls.__up_to_date = True
-            Logger.info("Reset Renderer.__up_to_date to True")
 
             # if Renderer.action_required["start_window"]:
             #     Logger.debug("Calling update_start_window in a new thread")
             #     start_new_thread(Renderer.update_start_window, ())
-

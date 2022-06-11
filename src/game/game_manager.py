@@ -2,9 +2,6 @@
 from random import randrange
 from typing import TYPE_CHECKING
 
-# Custom libs
-from src.log.logger import Logger
-
 if TYPE_CHECKING:
     from src.game.player import Player
 
@@ -20,58 +17,53 @@ class GameManager:
     player_1: "Player" = None
     player_2: "Player" = None
 
-    current_player: "Player" = None
+    current_player = None
 
-    __btns_pressed = 0
+    __buttons_pressed = 0
 
     @classmethod
-    def increment_btns_pressed(cls) -> None:
-        cls.__btns_pressed += 1
+    def increment_buttons_pressed(cls) -> None:
+        cls.__buttons_pressed += 1
 
     @classmethod
     def set_marks(cls) -> None:
-        Logger.debug("Setting players marks")
-        if randrange(1, 201) % 2 == 0:
+        if randrange(1, 201) & 1:
             cls.player_1.mark = 'X'
-            cls.current_player = cls.player_1
-
             cls.player_2.mark = 'O'
+
+            cls.current_player = cls.player_1
         else:
+            cls.player_1.mark = 'O'
             cls.player_2.mark = 'X'
+
             cls.current_player = cls.player_2
 
-            cls.player_1.mark = 'O'
-
     @classmethod
-    def get_possible_win_lines(cls, value: int) -> frozenset[frozenset[int]]:
+    def switch_current_player(cls) -> None:
+        cls.current_player = cls.current_player.next
+        cls.current_player = cls.player_1 \
+            if (cls.current_player is cls.player_2)\
+            else cls.player_2
+
+    # CHECK SPEED FROZENSET OR SET
+    @classmethod
+    def get_possible_win_lines(cls, value: int) -> set[frozenset[int]]:
         lines = set()
 
-        Logger.debug("Iterating through possible win lines")
         for line in cls.win_lines:
-            Logger.debug("Checking if value in a win line")
             if value in line:
-                Logger.debug("Adding a win line (without the value) to lines")
                 lines.add(
-                    line.difference(frozenset({value}))
+                    line.difference({value})  # Removing the value from the line
                 )
-                Logger.info("Added a win line (without the value) to lines successfully")
-        Logger.info("Iterated through all lines successfully and returning the win lines as frozenset")
-        return frozenset(lines)
+        return lines
 
     @classmethod
     def win_check(cls, value: int) -> bool:
         for line in cls.get_possible_win_lines(value):
             if line.issubset(GameManager.current_player.marked_spaces):
                 return True
+        return False
 
     @classmethod
-    def switch_current_player(cls) -> None:
-        if cls.current_player == cls.player_1:
-            cls.current_player = cls.player_2
-        elif cls.current_player == cls.player_2:
-            cls.current_player = cls.player_1
-
-    @classmethod
-    def draw_check(cls) -> bool:
-        return cls.__btns_pressed == 9
-
+    def tie_check(cls) -> bool:
+        return cls.__buttons_pressed == 9

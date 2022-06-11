@@ -20,6 +20,10 @@ class Player:
         return self.__name
 
     @property
+    def score(self):
+        return self.__score
+
+    @property
     def mark(self) -> str:
         return self.__mark
 
@@ -55,6 +59,6 @@ class Player:
             exit(1)
 
         self.__marked_spaces.add(value)
-        GameManager.increment_btns_pressed()
+        GameManager.increment_buttons_pressed()
 
         return GameManager.win_check(value)
