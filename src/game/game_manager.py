@@ -16,13 +16,17 @@ class GameManager:
     player_1 = Player("Player 1")
     player_2 = Player("Player 2")
 
-    current_player = None
+    current_player: Player = None
 
     __buttons_pressed = 0
 
     @classmethod
     def increment_buttons_pressed(cls) -> None:
         cls.__buttons_pressed += 1
+
+    @classmethod
+    def reset_buttons_pressed(cls) -> None:
+        cls.__buttons_pressed = 0
 
     @classmethod
     def set_marks(cls) -> None:

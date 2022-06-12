@@ -46,7 +46,7 @@ class Player:
     def reset_score(self) -> None:
         self.__score = 0
 
-    def add_marked_space(self, value: int) -> bool:
+    def add_a_marked_space(self, value: int) -> bool:
         if not (isinstance(value, int) or value in range(1, 10)):
             Logger.error(f"Got unexpected value: {value!r}")
             return False
@@ -54,3 +54,6 @@ class Player:
         self.__marked_spaces.add(value)
         self.game_manager.increment_buttons_pressed()
         return self.game_manager.win_check(value)
+
+    def reset_marked_spaces(self):
+        self.__marked_spaces.clear()

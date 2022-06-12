@@ -22,8 +22,11 @@ class StartWindowProcessor(Processor):
 
         windows_manager.set_window("game_window", GameWindowProcessor)
 
-        Logger.info("Calling show_game_window (from game_window processor) for game_window")
-        windows_manager.get_processor("game_window").show_game_window()
+        game_window_processor = windows_manager.get_processor("game_window")
+        Logger.info("Calling set_game (from game_window processor)")
+        game_window_processor.reset_game()
+        Logger.info("Calling show for game_window")
+        game_window_processor.game_window.show()
 
     def pve_btn_pressed(self) -> None:
         Logger.info("pve_btn_pressed called successfully")

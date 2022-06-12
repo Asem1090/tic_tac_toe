@@ -9,14 +9,14 @@ from threading import Thread
 from typing import Callable
 
 
+def start_in_new_thread(func: Callable, *args) -> None:
+    Thread(daemon=True, target=func, args=args).start()
+
+
 class Logger:
 
     config.fileConfig(fname="..\\..\\log_settings.config")
     __logger = getLogger(__name__)
-
-    @staticmethod
-    def start_in_new_thread(func: Callable, *args) -> None:
-        Thread(daemon=True, target=func, args=args).start()
 
     @staticmethod
     def message_correction(message: str) -> str:
@@ -36,24 +36,24 @@ class Logger:
 
     @classmethod
     def debug(cls, message: str) -> None:
-        cls.start_in_new_thread(cls.__logger.debug, cls.message_correction(message))
+        start_in_new_thread(cls.__logger.debug, cls.message_correction(message))
 
     @classmethod
     def info(cls, message: str) -> None:
-        cls.start_in_new_thread(cls.__logger.info, cls.message_correction(message))
+        start_in_new_thread(cls.__logger.info, cls.message_correction(message))
 
     @classmethod
     def warning(cls, message: str) -> None:
-        cls.start_in_new_thread(cls.__logger.warning, cls.message_correction(message))
+        start_in_new_thread(cls.__logger.warning, cls.message_correction(message))
 
     @classmethod
     def error(cls, message: str) -> None:
-        cls.start_in_new_thread(cls.__logger.error, cls.message_correction(message))
+        start_in_new_thread(cls.__logger.error, cls.message_correction(message))
 
     @classmethod
     def exception(cls, message: str) -> None:
-        cls.start_in_new_thread(cls.__logger.exception, cls.message_correction(message))
+        start_in_new_thread(cls.__logger.exception, cls.message_correction(message))
 
     @classmethod
     def critical(cls, message: str) -> None:
-        cls.start_in_new_thread(cls.__logger.critical, cls.message_correction(message))
+        start_in_new_thread(cls.__logger.critical, cls.message_correction(message))
