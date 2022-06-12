@@ -40,8 +40,6 @@ class Processor:
             self._buttons[btn_name] = window.findChild(QPushButton, btn_name)
 
             if self.button_exist(btn_name):
-                Logger.info(f"{btn_name} exists (not None)")
-
                 try:
                     self._buttons[btn_name].clicked.connect(kwargs[btn_name])
                 except TypeError:

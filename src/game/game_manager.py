@@ -3,6 +3,7 @@ from random import randrange
 from typing import Generator
 
 from src.game.player import Player
+from src.log.logger import Logger
 
 
 class GameManager:
@@ -45,7 +46,7 @@ class GameManager:
 
     # CHECK SPEED FROZENSET OR SET
     @classmethod
-    def get_possible_win_lines(cls, value: int) -> Generator[frozenset[int]]:
+    def get_possible_win_lines(cls, value: int) -> Generator[frozenset[int], None, None]:
         for line in cls.win_lines:
             if value in line:
                 yield line.difference({value})

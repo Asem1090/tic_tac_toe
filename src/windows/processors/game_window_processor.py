@@ -41,12 +41,8 @@ class GameWindowProcessor(Processor):
     def x_o_btn_pressed(self) -> None:
         current_player = GameManager.current_player
 
-        btn = self._windows_manager.get_window(self._window_name).sender()
-
-        Logger.debug("Changing the space to X or O")
+        btn = self.game_window.sender()
         btn.setText(current_player.mark)
-        Logger.info("Changed the space to X or O")
-
         btn.setDisabled(True)
 
         Logger.debug("Checking if win")
@@ -74,11 +70,9 @@ class GameWindowProcessor(Processor):
     def leave_btn_pressed(self) -> None:
         Logger.debug("Closing game_window")
         self.game_window.close()
-        Logger.info("Closed game_window successfully")
 
         Logger.debug("Calling show for start_window")
         self._windows_manager.get_window("start_window").show()
-        Logger.info("Called show for start_window successfully")
 
     def show_game_window(self):
         player_1 = GameManager.player_1

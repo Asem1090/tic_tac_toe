@@ -1,6 +1,3 @@
-# Built-in libs
-from typing import TYPE_CHECKING
-
 # Custom libs
 from src.log.logger import Logger
 from src.windows.processors.game_window_processor import GameWindowProcessor
@@ -20,14 +17,13 @@ class StartWindowProcessor(Processor):
 
     def pvp_btn_pressed(self) -> None:
         Logger.debug("Accessing and closing start_window")
-        self._windows_manager.get_window("start_window").close()
-        Logger.info(f"Closed start_window successfully")
+        windows_manager = self._windows_manager
+        windows_manager.get_window("start_window").close()
 
-        Logger.info("Calling set_window from WindowsManager for game_window")
-        self._windows_manager.set_window("game_window", GameWindowProcessor)
+        windows_manager.set_window("game_window", GameWindowProcessor)
 
-        Logger.info("Calling show for game_window")
-        self._windows_manager.get_processor("game_window").show_game_window()
+        Logger.info("Calling show_game_window (from game_window processor) for game_window")
+        windows_manager.get_processor("game_window").show_game_window()
 
     def pve_btn_pressed(self) -> None:
         Logger.info("pve_btn_pressed called successfully")
@@ -36,7 +32,6 @@ class StartWindowProcessor(Processor):
         Logger.info("local_network_btn_pressed called successfully")
 
     def player_login_btn_pressed(self, title):
-        Logger.info("Calling set_window from WindowsManager for login_window")
         self._windows_manager.set_window("login_window", LoginWindowProcessor)
 
         login_window = self._windows_manager.get_window("login_window")

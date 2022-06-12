@@ -53,7 +53,5 @@ class Player:
             return False
 
         self.__marked_spaces.add(value)
-        GameManager.increment_buttons_pressed()
-        return GameManager.win_check(value)
-
-
+        self.game_manager.increment_buttons_pressed()
+        return self.game_manager.win_check(value)

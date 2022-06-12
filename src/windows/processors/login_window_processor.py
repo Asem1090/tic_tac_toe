@@ -1,13 +1,10 @@
 # External libs
-from PyQt6.QtGui import QAction
 from PyQt6.QtWidgets import QLineEdit
 
 # Custom libs
 from src.game.game_manager import GameManager
-from src.log.logger import Logger
 from src.game.player import Player
 from src.windows.processors.processor import Processor
-from src.windows.windows_manager import WindowsManager
 
 
 class LoginWindowProcessor(Processor):
@@ -22,35 +19,32 @@ class LoginWindowProcessor(Processor):
         self.username_line_edit = self.window.findChild(QLineEdit, "username_line_edit")
         self.password_line_edit = self.window.findChild(QLineEdit, "password_line_edit")
 
-        close = self.window.findChild(QAction, "actionExit")
+        # close = self.window.findChild(QAction, "actionExit")
 
     def login_btn_pressed(self):
-        try:
-            Logger.debug("logining")
+        username_text = self.username_line_edit.text()
+        password_text = self.password_line_edit.text()
 
-            username_text = self.username_line_edit.text()
-            password_text = self.password_line_edit.text()
+        window_title = self.window.windowTitle()
 
-            if self.passwordMatch(username_text, password_text):
-                if self.window.windowTitle() == "Player 1 Login":
-                    GameManager.player_1 = Player(username_text)
-                elif self.window.windowTitle() == "Player 2 Login":
-                    GameManager.player_2 = Player(password_text)
+        if self.password_match(username_text, password_text):
+            if window_title == "Player 1 Login":
+                GameManager.player_1 = Player(username_text)
+            elif window_title == "Player 2 Login":
+                GameManager.player_2 = Player(username_text)
 
-            self.closeEvent(None)
+        self.close_event()
 
-        except Exception as e:
-            Logger.exception(f"Error: {e}")
+
     def cancel_btn_pressed(self):
-        self.closeEvent(None)
+        self.close_event()
 
-    def closeEvent(self, event):
-        Logger.debug("closeEvent called")
+    def close_event(self):
         self.username_line_edit.setText("")
         self.password_line_edit.setText("")
 
         self.window.close()
 
     @staticmethod
-    def passwordMatch(username, password):
+    def password_match(username, password):
         return True
