@@ -40,7 +40,7 @@ class GameWindowProcessor(Processor):
 
     def x_o_btn_pressed(self) -> None:
         current_player = GameManager.current_player
-
+        print(current_player.mark)
         btn = self.game_window.sender()
         btn.setText(current_player.mark)
         btn.setDisabled(True)
@@ -71,8 +71,7 @@ class GameWindowProcessor(Processor):
         self._windows_manager.get_window("start_window").show()
 
     def update_game_window(self) -> None:
-        player_1 = GameManager.player_1
-        player_2 = GameManager.player_2
+        player_1, player_2 = GameManager.get_players()
 
         self.player_1_label.setText(f"{player_1.name} ({player_1.mark})\n{player_1.score}")
         self.player_2_label.setText(f"{player_2.name} ({player_2.mark})\n{player_2.score}")
@@ -84,18 +83,16 @@ class GameWindowProcessor(Processor):
             button.setText("")
             button.setEnabled(True)
 
-    def set_round(self) -> None:
+    def __new_round(self) -> None:
         GameManager.set_marks()
         self.update_game_window()
 
     def reset_round(self) -> None:
-        GameManager.player_1.reset_marked_spaces()
-        GameManager.player_2.reset_marked_spaces()
+        GameManager.reset_marked_spaces()
         GameManager.reset_buttons_pressed()
         self.reset_x_o_buttons()
-        self.set_round()
+        self.__new_round()
 
     def reset_game(self) -> None:
-        GameManager.player_1.reset_score()
-        GameManager.player_2.reset_score()
+        GameManager.reset_scores()
         self.reset_round()

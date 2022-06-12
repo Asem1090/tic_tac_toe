@@ -23,8 +23,10 @@ class StartWindowProcessor(Processor):
         windows_manager.set_window("game_window", GameWindowProcessor)
 
         game_window_processor = windows_manager.get_processor("game_window")
-        Logger.info("Calling set_game (from game_window processor)")
+
+        Logger.info("Calling reset_game (from game_window processor)")
         game_window_processor.reset_game()
+
         Logger.info("Calling show for game_window")
         game_window_processor.game_window.show()
 
