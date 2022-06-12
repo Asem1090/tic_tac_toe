@@ -45,11 +45,9 @@ class GameWindowProcessor(Processor):
         btn.setText(current_player.mark)
         btn.setDisabled(True)
 
-        Logger.debug("Checking if win")
         if current_player.add_marked_space(self.btn_to_num[btn.objectName()]):
             Logger.info(f"{current_player.name} has won")  # Show win window
 
-        Logger.debug("Checking if draw")
         if GameManager.tie_check():
             Logger.info("Draw")  # Show draw window
 

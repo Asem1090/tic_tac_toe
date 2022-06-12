@@ -3,7 +3,6 @@ from random import randrange
 from typing import Generator
 
 from src.game.player import Player
-from src.log.logger import Logger
 
 
 class GameManager:

@@ -1,3 +1,4 @@
+# Built-in libs
 from inspect import stack
 from logging import config, getLogger
 from os.path import basename
@@ -5,10 +6,17 @@ from threading import Thread
 
 
 # Use lock
+from typing import Callable
+
+
 class Logger:
 
     config.fileConfig(fname="..\\..\\log_settings.config")
     __logger = getLogger(__name__)
+
+    @staticmethod
+    def start_in_new_thread(func: Callable, *args) -> None:
+        Thread(daemon=True, target=func, args=args).start()
 
     @staticmethod
     def message_correction(message: str) -> str:
@@ -28,24 +36,24 @@ class Logger:
 
     @classmethod
     def debug(cls, message: str) -> None:
-        Thread(daemon=True, target=cls.__logger.debug, args=(cls.message_correction(message),)).start()
+        cls.start_in_new_thread(cls.__logger.debug, cls.message_correction(message))
 
     @classmethod
     def info(cls, message: str) -> None:
-        Thread(daemon=True, target=cls.__logger.info, args=(cls.message_correction(message),)).start()
+        cls.start_in_new_thread(cls.__logger.info, cls.message_correction(message))
 
     @classmethod
     def warning(cls, message: str) -> None:
-        Thread(daemon=True, target=cls.__logger.warning, args=(cls.message_correction(message),)).start()
+        cls.start_in_new_thread(cls.__logger.warning, cls.message_correction(message))
 
     @classmethod
     def error(cls, message: str) -> None:
-        Thread(daemon=True, target=cls.__logger.error, args=(cls.message_correction(message),)).start()
+        cls.start_in_new_thread(cls.__logger.error, cls.message_correction(message))
 
     @classmethod
     def exception(cls, message: str) -> None:
-        Thread(daemon=True, target=cls.__logger.exception, args=(cls.message_correction(message),)).start()
+        cls.start_in_new_thread(cls.__logger.exception, cls.message_correction(message))
 
     @classmethod
     def critical(cls, message: str) -> None:
-        Thread(daemon=True, target=cls.__logger.critical, args=(cls.message_correction(message),)).start()
+        cls.start_in_new_thread(cls.__logger.critical, cls.message_correction(message))

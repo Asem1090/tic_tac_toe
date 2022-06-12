@@ -19,18 +19,13 @@ class Renderer:
 
     @classmethod
     def set_button_action_to_true(cls, window_name: str, action_name: str) -> None:
-        Logger.debug(f"Changing {window_name} in action_required to True")
         cls.__action_required[window_name] = True
-        Logger.info(f"Changed {window_name} in action_required to True successfully")
-
-        Logger.debug(f"Changing {action_name} in actions_for_windows to True")
         cls.__actions_for_windows[window_name][action_name] = True
-        Logger.info(f"Changed {action_name} in actions_for_windows to True successfully")
 
     @classmethod
     def start(cls) -> bool:
         Logger.debug("Starting the renderer in a new thread")
-        Thread(daemon=True, target=cls.run, args=())
+        Thread(daemon=True, target=cls.run, args=()).start()
 
         cls.start = lambda: False
         return True

@@ -1,5 +1,4 @@
 # Built-in libs
-from sys import exit
 from typing import Literal, TYPE_CHECKING
 
 # Custom libs

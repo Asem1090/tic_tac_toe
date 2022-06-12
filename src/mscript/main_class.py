@@ -1,4 +1,5 @@
 # Built-in libs
+import time
 from sys import exit
 
 # External libs
@@ -22,7 +23,6 @@ class MainClass:
         self.__app = QApplication([])
         Logger.info("QApplication object created successfully")
 
-        Logger.debug("Calling set_window from WindowsManager")
         WindowsManager.set_window("start_window", StartWindowProcessor)
 
         Logger.debug("Calling show for start window")
@@ -42,5 +42,5 @@ class MainClass:
 
             exit(exit_code)
 
-        except SystemExit:
-            Logger.exception("Exiting the system")
+        except SystemExit as E:
+            Logger.threadless_debug(f"Exiting the system: {E}")
