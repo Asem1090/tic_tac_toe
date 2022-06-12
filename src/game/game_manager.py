@@ -1,9 +1,8 @@
 # Built-in libs
 from random import randrange
-from typing import TYPE_CHECKING
+from typing import Generator
 
-if TYPE_CHECKING:
-    from src.game.player import Player
+from src.game.player import Player
 
 
 class GameManager:
@@ -14,8 +13,8 @@ class GameManager:
         frozenset({1, 5, 9}), frozenset({3, 5, 7})  # diagonals
     })
 
-    player_1: "Player" = None
-    player_2: "Player" = None
+    player_1 = Player("Player 1")
+    player_2 = Player("Player 2")
 
     current_player = None
 
@@ -46,7 +45,7 @@ class GameManager:
 
     # CHECK SPEED FROZENSET OR SET
     @classmethod
-    def get_possible_win_lines(cls, value: int) -> frozenset[int]:
+    def get_possible_win_lines(cls, value: int) -> Generator[frozenset[int]]:
         for line in cls.win_lines:
             if value in line:
                 yield line.difference({value})

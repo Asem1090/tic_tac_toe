@@ -59,7 +59,7 @@ class WindowsManager:
             return
 
         Logger.debug(f"Creating {window_name} processor object")
-        cls.__windows[window_name]["processor"] = processor(cls)
+        cls.__windows[window_name]["processor"] = processor()
         Logger.info(f"Created {window_name} processor object successfully")
 
     @classmethod

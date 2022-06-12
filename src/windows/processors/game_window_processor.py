@@ -16,18 +16,16 @@ if TYPE_CHECKING:
 class GameWindowProcessor(Processor):
     btn_to_num = {f"btn_{i}": i for i in range(1, 10)}
 
-    def __init__(self, windows_manager: "WindowsManager"):
-        # player_1 = None
-        # player_2 = None
+    def __init__(self):
 
         super().__init__(
-            windows_manager, "game_window",
+            "game_window",
             **{f"btn_{i}": self.x_o_btn_pressed for i in range(1, 10)},
-            set_timer_btn= self.set_timer_btn_pressed,
-            start_stop_timer_btn= self.start_stop_timer_pressed,
-            reset_game_btn= self.reset_game_btn_pressed,
-            reset_round_btn= self.reset_round_btn_pressed,
-            leave_btn= self.leave_btn_pressed
+            set_timer_btn=self.set_timer_btn_pressed,
+            start_stop_timer_btn=self.start_stop_timer_pressed,
+            reset_game_btn=self.reset_game_btn_pressed,
+            reset_round_btn=self.reset_round_btn_pressed,
+            leave_btn=self.leave_btn_pressed
         )
 
         self.game_window = self._windows_manager.get_window("game_window")
@@ -51,15 +49,15 @@ class GameWindowProcessor(Processor):
 
         btn.setDisabled(True)
 
-        Logger.debug("Checking if win or draw")
+        Logger.debug("Checking if win")
         if current_player.add_marked_space(self.btn_to_num[btn.objectName()]):
-            Logger.critical(f"{current_player.name} has won")  # Show win window
-        elif GameManager.tie_check():
-            Logger.critical("Draw")  # Show draw window
+            Logger.info(f"{current_player.name} has won")  # Show win window
+
+        Logger.debug("Checking if draw")
+        if GameManager.tie_check():
+            Logger.info("Draw")  # Show draw window
 
         GameManager.switch_current_player()
-
-        Logger.info("x_o_btn_pressed called successfully")
 
     def set_timer_btn_pressed(self) -> None:
         Logger.info("set_timer_btn_pressed called successfully")

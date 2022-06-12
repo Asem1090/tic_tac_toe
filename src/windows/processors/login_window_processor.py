@@ -12,9 +12,9 @@ from src.windows.windows_manager import WindowsManager
 
 class LoginWindowProcessor(Processor):
 
-    def __init__(self, windows_manager: WindowsManager):
+    def __init__(self):
         super().__init__(
-            windows_manager, "login_window",
+            "login_window",
             login_btn=self.login_btn_pressed, cancel_btn=self.cancel_btn_pressed
         )
 

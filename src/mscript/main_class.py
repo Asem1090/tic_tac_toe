@@ -8,6 +8,7 @@ from PyQt6.QtWidgets import QApplication
 from src.game.game_manager import GameManager
 from src.game.player import Player
 from src.log.logger import Logger
+from src.windows.processors.processor import Processor
 from src.windows.processors.start_window_processor import StartWindowProcessor
 from src.windows.windows_manager import WindowsManager
 
@@ -15,9 +16,7 @@ from src.windows.windows_manager import WindowsManager
 class MainClass:
 
     def __init__(self):
-        # Setting default players
-        GameManager.player_1 = Player("Player 1")
-        GameManager.player_2 = Player("Player 2")
+        self.set_values()
 
         Logger.debug("Creating QApplication object")
         self.__app = QApplication([])
@@ -29,6 +28,11 @@ class MainClass:
         Logger.debug("Calling show for start window")
         WindowsManager.get_window("start_window").show()
         Logger.info("show called successfully for start window")
+
+    @staticmethod
+    def set_values():
+        Player.game_manager = GameManager
+        Processor._windows_manager = WindowsManager
 
     def run(self) -> None:
 

@@ -1,13 +1,16 @@
 # Built-in libs
 from sys import exit
-from typing import Literal
+from typing import Literal, TYPE_CHECKING
 
 # Custom libs
-from src.game.game_manager import GameManager
 from src.log.logger import Logger
+
+if TYPE_CHECKING:
+    from src.game.game_manager import GameManager
 
 
 class Player:
+    game_manager: "GameManager" = None
 
     def __init__(self, name: str):
         self.__name = name

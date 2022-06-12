@@ -13,21 +13,17 @@ if TYPE_CHECKING:
 
 
 class Processor:
+    _windows_manager: "WindowsManager" = None
 
-    def __init__(self, windows_manager: "WindowsManager", window_name: str, *args: str, **kwargs: Callable[[], None]):
+    def __init__(self, window_name: str, *args: str, **kwargs: Callable[[], None]):
         self._buttons = {}  # {Button Name: Button Object}
         self._window_name = window_name
-        self._windows_manager = windows_manager
 
         Logger.debug("Calling add_and_connect_button_to_renderer(*args)")
         self.add_and_connect_button_to_renderer(*args)
 
         Logger.debug("Calling add_and_connect_button_to_func(**kwargs)")
         self.add_and_connect_button_to_func(**kwargs)
-
-    @property
-    def windows_manager(self):
-        return self._windows_manager
 
     @property
     def window_name(self):

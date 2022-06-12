@@ -7,15 +7,12 @@ from src.windows.processors.game_window_processor import GameWindowProcessor
 from src.windows.processors.login_window_processor import LoginWindowProcessor
 from src.windows.processors.processor import Processor
 
-if TYPE_CHECKING:
-    from src.windows.windows_manager import WindowsManager
-
 
 class StartWindowProcessor(Processor):
 
-    def __init__(self, windows_manager: "WindowsManager"):
+    def __init__(self):
         super().__init__(
-            windows_manager, "start_window",
+            "start_window",
             pvp_btn=self.pvp_btn_pressed, pve_btn=self.pve_btn_pressed,
             local_network_btn=self.local_network_btn_pressed,
             player_1_login_btn=self.player_1_login_btn_pressed, player_2_login_btn=self.player_2_login_btn_pressed
