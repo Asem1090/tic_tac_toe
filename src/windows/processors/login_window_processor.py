@@ -29,9 +29,9 @@ class LoginWindowProcessor(Processor):
 
         if self.__password_match(username_text, password_text):
             if window_title == "Player 1 Login":
-                GameManager.player_1 = Player(username_text)
+                GameManager.set_player_1(username_text)
             elif window_title == "Player 2 Login":
-                GameManager.player_2 = Player(username_text)
+                GameManager.set_player_2(username_text)
 
         self.__close_event()
 

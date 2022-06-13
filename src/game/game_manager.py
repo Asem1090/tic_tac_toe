@@ -26,6 +26,14 @@ class GameManager:
         return cls.__player_1, cls.__player_2
 
     @classmethod
+    def set_player_1(cls, username: str):
+        cls.__player_1 = Player(username)
+
+    @classmethod
+    def set_player_2(cls, username: str):
+        cls.__player_2 = Player(username)
+
+    @classmethod
     def increment_buttons_pressed(cls) -> None:
         cls.__buttons_pressed += 1
 
