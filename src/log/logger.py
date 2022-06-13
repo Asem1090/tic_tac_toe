@@ -19,7 +19,7 @@ class Logger:
     __logger = getLogger(__name__)
 
     @staticmethod
-    def message_correction(message: str) -> str:
+    def __message_correction(message: str) -> str:
         st = stack()[2]
         message = (
             "\n"
@@ -32,28 +32,28 @@ class Logger:
 
     @classmethod
     def threadless_debug(cls, message: str) -> None:
-        cls.__logger.debug(cls.message_correction(message))
+        cls.__logger.debug(cls.__message_correction(message))
 
     @classmethod
     def debug(cls, message: str) -> None:
-        start_in_new_thread(cls.__logger.debug, cls.message_correction(message))
+        start_in_new_thread(cls.__logger.debug, cls.__message_correction(message))
 
     @classmethod
     def info(cls, message: str) -> None:
-        start_in_new_thread(cls.__logger.info, cls.message_correction(message))
+        start_in_new_thread(cls.__logger.info, cls.__message_correction(message))
 
     @classmethod
     def warning(cls, message: str) -> None:
-        start_in_new_thread(cls.__logger.warning, cls.message_correction(message))
+        start_in_new_thread(cls.__logger.warning, cls.__message_correction(message))
 
     @classmethod
     def error(cls, message: str) -> None:
-        start_in_new_thread(cls.__logger.error, cls.message_correction(message))
+        start_in_new_thread(cls.__logger.error, cls.__message_correction(message))
 
     @classmethod
     def exception(cls, message: str) -> None:
-        start_in_new_thread(cls.__logger.exception, cls.message_correction(message))
+        start_in_new_thread(cls.__logger.exception, cls.__message_correction(message))
 
     @classmethod
     def critical(cls, message: str) -> None:
-        start_in_new_thread(cls.__logger.critical, cls.message_correction(message))
+        start_in_new_thread(cls.__logger.critical, cls.__message_correction(message))

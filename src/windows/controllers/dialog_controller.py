@@ -1,5 +1,4 @@
 # External libs
-from PyQt6.QtCore import Qt
 from PyQt6 import uic
 from PyQt6.QtWidgets import QDialog
 

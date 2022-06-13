@@ -9,7 +9,7 @@ if TYPE_CHECKING:
 
 
 class Player:
-    game_manager: "GameManager" = None
+    manager: "GameManager" = None
 
     def __init__(self, name: str):
         self.__name = name
@@ -40,11 +40,12 @@ class Player:
 
         self.__mark = value
 
+    @classmethod
+    def set_manager(cls, _class) -> None:
+        cls.manager = _class
+
     def increment_score(self) -> None:
         self.__score += 1
-
-    def reset_score(self) -> None:
-        self.__score = 0
 
     def add_a_marked_space(self, value: int) -> bool:
         if not (isinstance(value, int) or value in range(1, 10)):
@@ -52,8 +53,11 @@ class Player:
             return False
 
         self.__marked_spaces.add(value)
-        self.game_manager.increment_buttons_pressed()
-        return self.game_manager.win_check(value)
+        self.manager.increment_buttons_pressed()
+        return self.manager.win_check(value)
 
-    def reset_marked_spaces(self):
+    def reset_score(self) -> None:
+        self.__score = 0
+
+    def reset_marked_spaces(self) -> None:
         self.__marked_spaces.clear()

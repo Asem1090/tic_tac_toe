@@ -3,6 +3,7 @@ from threading import enumerate as thread_enumerate
 from tracemalloc import start, take_snapshot
 
 # Custom libs
+from src import check_time
 from src.log.logger import Logger
 from src.mscript.main_class import MainClass
 

@@ -2,6 +2,7 @@
 from random import randrange
 from typing import Generator
 
+from src import check_time
 from src.game.player import Player
 
 
@@ -24,17 +25,9 @@ class GameManager:
     def get_players(cls) -> tuple[Player, Player]:
         return cls.__player_1, cls.__player_2
 
-    # @classmethod
-    # def get_current_player(cls) -> Player:
-    #     return cls.__current_player
-
     @classmethod
     def increment_buttons_pressed(cls) -> None:
         cls.__buttons_pressed += 1
-
-    @classmethod
-    def reset_buttons_pressed(cls) -> None:
-        cls.__buttons_pressed = 0
 
     @classmethod
     def set_marks(cls) -> None:
@@ -48,6 +41,10 @@ class GameManager:
             cls.__player_2.mark = 'X'
 
             cls.current_player = cls.__player_2
+
+    @classmethod
+    def reset_buttons_pressed(cls) -> None:
+        cls.__buttons_pressed = 0
 
     @classmethod
     def reset_scores(cls):
@@ -65,7 +62,6 @@ class GameManager:
             if (cls.current_player is cls.__player_2)\
             else cls.__player_2
 
-    # CHECK SPEED FROZENSET OR SET
     @classmethod
     def __get_possible_win_lines(cls, value: int) -> Generator[frozenset[int], None, None]:
         for line in cls.__win_lines:

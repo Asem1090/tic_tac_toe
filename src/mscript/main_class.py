@@ -17,7 +17,7 @@ from src.windows.windows_manager import WindowsManager
 class MainClass:
 
     def __init__(self):
-        self.set_values()
+        self.__set_managers()
 
         Logger.debug("Creating QApplication object")
         self.__app = QApplication([])
@@ -30,9 +30,9 @@ class MainClass:
         Logger.info("show called successfully for start window")
 
     @staticmethod
-    def set_values():
-        Player.game_manager = GameManager
-        Processor._windows_manager = WindowsManager
+    def __set_managers():
+        Player.set_manager(GameManager)
+        Processor.set_manager(WindowsManager)
 
     def run(self) -> None:
 

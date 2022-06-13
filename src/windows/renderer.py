@@ -25,13 +25,13 @@ class Renderer:
     @classmethod
     def start(cls) -> bool:
         Logger.debug("Starting the renderer in a new thread")
-        Thread(daemon=True, target=cls.run, args=()).start()
+        Thread(daemon=True, target=cls.__run, args=()).start()
 
         cls.start = lambda: False
         return True
 
     @classmethod
-    def run(cls) -> None:
+    def __run(cls) -> None:
         Logger.info("Running the renderer")
         while True:
             sleep(0.001)
