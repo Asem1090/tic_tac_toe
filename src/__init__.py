@@ -6,6 +6,8 @@ from typing import Callable
 # Custom libs
 from src.log.logger import Logger
 
+IS_DAEMON = True
+
 
 # WRITTEN IN LOGGER TOO. FIX! FIX! FIX!
 def start_in_new_thread(func: Callable, *args) -> None:

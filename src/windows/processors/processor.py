@@ -13,7 +13,7 @@ if TYPE_CHECKING:
 
 
 class Processor:
-    _manager: "WindowsManager" = None
+    manager: "WindowsManager" = None
 
     def __init__(self, window_name: str, *args: str, **kwargs: Callable[[], None]):
         self._buttons = {}  # {Button Name: Button Object}
@@ -31,14 +31,14 @@ class Processor:
 
     @classmethod
     def set_manager(cls, _class) -> None:
-        cls._manager = _class
+        cls.manager = _class
 
     def __button_exist(self, btn_name: str) -> bool:
         # btn_name is always in buttons.keys(), no need to check.
         return self._buttons[btn_name] is not None
 
     def __add_and_connect_button_to_func(self, **kwargs: Callable[[], None]) -> None:
-        window = self._manager.get_window(self._window_name)
+        window = self.manager.get_window(self._window_name)
 
         for btn_name in kwargs:
             self._buttons[btn_name] = window.findChild(QPushButton, btn_name)

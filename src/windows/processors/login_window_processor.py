@@ -15,7 +15,7 @@ class LoginWindowProcessor(Processor):
             login_btn=self.__login_btn_pressed, cancel_btn=self.__cancel_btn_pressed
         )
 
-        self.window = self._manager.get_window(self._window_name)
+        self.window = self.manager.get_window(self._window_name)
         self.username_line_edit = self.window.findChild(QLineEdit, "username_line_edit")
         self.password_line_edit = self.window.findChild(QLineEdit, "password_line_edit")
 

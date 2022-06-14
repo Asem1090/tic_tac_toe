@@ -12,7 +12,7 @@ class SetTimerProcessor(Processor):
     def __init__(self):
         super().__init__("set_timer_window", ok_button=self.ok_button_pressed)
 
-        self.window = self._manager.get_window("set_timer_window")
+        self.window = self.manager.get_window("set_timer_window")
 
         self.timer_period_line_edit = self.window.findChild(QLineEdit, "timer_period_line_edit")
 

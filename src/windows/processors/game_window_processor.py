@@ -18,18 +18,18 @@ class GameWindowProcessor(Processor):
     __btn_to_num = {f"btn_{i}": i for i in range(1, 10)}
 
     def __init__(self):
+        self.var_period = None
 
         super().__init__(
-            "game_window",
+            "game_window", "start_stop_timer_button",
             **{f"btn_{i}": self.__x_o_btn_pressed for i in range(1, 10)},
             set_timer_btn=self.__set_timer_btn_pressed,
-            start_stop_timer_btn=self.__start_stop_timer_pressed,
             reset_game_btn=self.reset_game,
             reset_round_btn=self.__reset_round,
             leave_btn=self.__leave_btn_pressed
         )
 
-        self.__game_window = self._manager.get_window("game_window")
+        self.__game_window = self.manager.get_window("game_window")
 
         self.__player_1_label = self.__game_window.findChild(QLabel, "player_1_label")
         if self.__player_1_label is None:
@@ -44,6 +44,8 @@ class GameWindowProcessor(Processor):
         return self.__game_window
 
     def __x_o_btn_pressed(self) -> None:
+        self.var_period = GameManager.get_timer_period()
+
         current_player = GameManager.get_current_player()
 
         btn = self.__game_window.sender()
@@ -66,16 +68,13 @@ class GameWindowProcessor(Processor):
         self.__set_players_labels_color()
 
     def __set_timer_btn_pressed(self) -> None:
-        self._manager.set_window("set_timer_window", SetTimerProcessor)
-        self._manager.get_window("set_timer_window").show()
+        self.manager.set_window("set_timer_window", SetTimerProcessor)
+        self.manager.get_window("set_timer_window").show()
 
-    def __start_stop_timer_pressed(self) -> None:
+    def start_stop_timer_button_pressed(self) -> None:
         Logger.info("start_stop_timer_pressed called successfully")
-        start_in_new_thread(self.__timer, GameManager.get_timer_period())
-
-    def __timer(self, period):
         while True:
-            self.var_period = period
+            self.var_period = GameManager.get_timer_period()
 
             while self.var_period > 0:
                 sleep(1)
@@ -88,7 +87,7 @@ class GameWindowProcessor(Processor):
         self.__game_window.close()
 
         Logger.debug("Calling show for start_window")
-        self._manager.get_window("start_window").show()
+        self.manager.get_window("start_window").show()
 
     def __update_game_window(self) -> None:
         player_1, player_2 = GameManager.get_players()

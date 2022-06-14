@@ -5,7 +5,6 @@ from typing import Type, TypeVar, Union
 from PyQt6.QtWidgets import QMainWindow
 
 # Custom libs
-from src import check_time
 from src.log.logger import Logger
 from src.windows.controllers.dialog_controller import DialogController
 from src.windows.controllers.main_window_controller import MainWindowController

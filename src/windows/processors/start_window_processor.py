@@ -18,7 +18,7 @@ class StartWindowProcessor(Processor):
 
     def __pvp_btn_pressed(self) -> None:
         Logger.debug("Accessing and closing start_window")
-        windows_manager = self._manager
+        windows_manager = self.manager
         windows_manager.get_window("start_window").close()
 
         windows_manager.set_window("game_window", GameWindowProcessor)
@@ -38,9 +38,9 @@ class StartWindowProcessor(Processor):
         Logger.info("local_network_btn_pressed called successfully")
 
     def __player_login_btn_pressed(self, title):
-        self._manager.set_window("login_window", LoginWindowProcessor)
+        self.manager.set_window("login_window", LoginWindowProcessor)
 
-        login_window = self._manager.get_window("login_window")
+        login_window = self.manager.get_window("login_window")
         login_window.setWindowTitle(title)
 
         Logger.info("Calling show for login_window")

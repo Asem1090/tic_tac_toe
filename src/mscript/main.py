@@ -21,7 +21,7 @@ def main() -> None:
     for thread in thread_enumerate():
         if thread.name != "MainThread":
             Logger.threadless_debug(f"Waiting for {thread.name} to finish")
-            thread.join()
+            thread.join(1)
             Logger.threadless_debug(f"{thread.name} closed")
 
 
