@@ -42,7 +42,7 @@ class GameWindowProcessor(Processor):
 
     @check_time
     def __x_o_btn_pressed(self) -> None:
-        current_player = GameManager.current_player
+        current_player = GameManager.get_current_player()
 
         btn = self.__game_window.sender()
         btn.setText(current_player.mark)
@@ -60,6 +60,7 @@ class GameWindowProcessor(Processor):
             return
 
         GameManager.switch_current_player()
+        self.__set_players_labels_color()
 
     def __set_timer_btn_pressed(self) -> None:
         Logger.info("set_timer_btn_pressed called successfully")
@@ -78,6 +79,8 @@ class GameWindowProcessor(Processor):
 
         self.__player_1_label.setText(f"{player_1.name} ({player_1.mark})\n{player_1.score}")
         self.__player_2_label.setText(f"{player_2.name} ({player_2.mark})\n{player_2.score}")
+
+        self.__set_players_labels_color()
 
     def __reset_x_o_buttons(self) -> None:
         for i in range(1, 10):
@@ -98,3 +101,11 @@ class GameWindowProcessor(Processor):
     def reset_game(self) -> None:
         GameManager.reset_scores()
         self.__reset_round()
+
+    def __set_players_labels_color(self) -> None:
+        if GameManager.get_current_player() is GameManager.get_player_1():
+            self.__player_1_label.setStyleSheet("color: red")
+            self.__player_2_label.setStyleSheet("color: black")
+        else:
+            self.__player_1_label.setStyleSheet("color: black")
+            self.__player_2_label.setStyleSheet("color: red")

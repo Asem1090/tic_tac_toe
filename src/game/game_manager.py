@@ -17,13 +17,21 @@ class GameManager:
     __player_1 = Player("Player 1")
     __player_2 = Player("Player 2")
 
-    current_player: Player = None
+    __current_player: Player = None
 
     __buttons_pressed = 0
 
     @classmethod
     def get_players(cls) -> tuple[Player, Player]:
         return cls.__player_1, cls.__player_2
+
+    @classmethod
+    def get_player_1(cls) -> Player:
+        return cls.__player_1
+
+    @classmethod
+    def get_current_player(cls) -> Player:
+        return cls.__current_player
 
     @classmethod
     def set_player_1(cls, username: str):
@@ -34,21 +42,21 @@ class GameManager:
         cls.__player_2 = Player(username)
 
     @classmethod
-    def increment_buttons_pressed(cls) -> None:
-        cls.__buttons_pressed += 1
-
-    @classmethod
     def set_marks(cls) -> None:
         if randrange(1, 201) & 1:
             cls.__player_1.mark = 'X'
             cls.__player_2.mark = 'O'
 
-            cls.current_player = cls.__player_1
+            cls.__current_player = cls.__player_1
         else:
             cls.__player_1.mark = 'O'
             cls.__player_2.mark = 'X'
 
-            cls.current_player = cls.__player_2
+            cls.__current_player = cls.__player_2
+
+    @classmethod
+    def increment_buttons_pressed(cls) -> None:
+        cls.__buttons_pressed += 1
 
     @classmethod
     def reset_buttons_pressed(cls) -> None:
@@ -66,8 +74,8 @@ class GameManager:
 
     @classmethod
     def switch_current_player(cls) -> None:
-        cls.current_player = cls.__player_1 \
-            if (cls.current_player is cls.__player_2)\
+        cls.__current_player = cls.__player_1 \
+            if (cls.__current_player is cls.__player_2)\
             else cls.__player_2
 
     @classmethod
@@ -79,7 +87,7 @@ class GameManager:
     @classmethod
     def win_check(cls, value: int) -> bool:
         for line in cls.__get_possible_win_lines(value):
-            if line.issubset(GameManager.current_player.marked_spaces):
+            if line.issubset(GameManager.__current_player.marked_spaces):
                 return True
         return False
 
