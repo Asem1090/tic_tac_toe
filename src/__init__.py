@@ -1,8 +1,15 @@
 # Built-in libs
+from threading import Thread
 from time import perf_counter
+from typing import Callable
 
 # Custom libs
 from src.log.logger import Logger
+
+
+# WRITTEN IN LOGGER TOO. FIX! FIX! FIX!
+def start_in_new_thread(func: Callable, *args) -> None:
+    Thread(daemon=True, target=func, args=args).start()
 
 
 def __call_func(func, *args, **kwargs):
@@ -22,7 +29,6 @@ def __call_func(func, *args, **kwargs):
 
 
 def check_time(func):
-
     def check(*args, **kwargs):
 
         returned_value = None

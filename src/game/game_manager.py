@@ -2,7 +2,7 @@
 from random import randrange
 from typing import Generator
 
-from src import check_time
+from src import check_time, Logger
 from src.game.player import Player
 
 
@@ -20,6 +20,19 @@ class GameManager:
     __current_player: Player = None
 
     __buttons_pressed = 0
+
+    __timer_period = 0
+
+    @classmethod
+    def get_timer_period(cls):
+        return cls.__timer_period
+
+    @classmethod
+    def set_timer_period(cls, value):
+        if not (isinstance(value, int) or isinstance(value, float)) or value < 0:
+            Logger.error(f"Value must be a positive number, got {value}")
+
+        cls.__timer_period = value
 
     @classmethod
     def get_players(cls) -> tuple[Player, Player]:

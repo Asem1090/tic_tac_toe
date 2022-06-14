@@ -1,14 +1,17 @@
 # Built-in libs
+from time import sleep
 from typing import TYPE_CHECKING
 
 # External libs
 from PyQt6.QtWidgets import QLabel
 
 # Custom libs
-from src import check_time
+from src import check_time, start_in_new_thread
 from src.game.game_manager import GameManager
 from src.log.logger import Logger
 from src.windows.processors.processor import Processor
+from src.windows.processors.set_timer_processor import SetTimerProcessor
+from src.windows.renderer import Renderer
 
 
 class GameWindowProcessor(Processor):
@@ -40,7 +43,6 @@ class GameWindowProcessor(Processor):
     def game_window(self):
         return self.__game_window
 
-    @check_time
     def __x_o_btn_pressed(self) -> None:
         current_player = GameManager.get_current_player()
 
@@ -59,14 +61,28 @@ class GameWindowProcessor(Processor):
             self.__reset_round()
             return
 
+        self.var_period = GameManager.get_timer_period()
         GameManager.switch_current_player()
         self.__set_players_labels_color()
 
     def __set_timer_btn_pressed(self) -> None:
-        Logger.info("set_timer_btn_pressed called successfully")
+        self._manager.set_window("set_timer_window", SetTimerProcessor)
+        self._manager.get_window("set_timer_window").show()
 
     def __start_stop_timer_pressed(self) -> None:
         Logger.info("start_stop_timer_pressed called successfully")
+        start_in_new_thread(self.__timer, GameManager.get_timer_period())
+
+    def __timer(self, period):
+        while True:
+            self.var_period = period
+
+            while self.var_period > 0:
+                sleep(1)
+                self.var_period -= 1
+                Renderer.set_up_to_date_to_false()
+
+            GameManager.switch_current_player()
 
     def __leave_btn_pressed(self) -> None:
         self.__game_window.close()

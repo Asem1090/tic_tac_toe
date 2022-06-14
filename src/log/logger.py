@@ -3,9 +3,6 @@ from inspect import stack
 from logging import config, getLogger
 from os.path import basename
 from threading import Thread
-
-
-# Use lock
 from typing import Callable
 
 
@@ -13,10 +10,12 @@ def start_in_new_thread(func: Callable, *args) -> None:
     Thread(daemon=True, target=func, args=args).start()
 
 
+# Use lock
 class Logger:
 
     config.fileConfig(fname="..\\..\\log_settings.config")
     __logger = getLogger(__name__)
+
 
     @staticmethod
     def __message_correction(message: str) -> str:

@@ -14,8 +14,8 @@ class Renderer:
     __actions_for_windows = {}
 
     @classmethod
-    def set_up_to_date_to_true(cls) -> None:
-        cls.__up_to_date = True
+    def set_up_to_date_to_false(cls) -> None:
+        cls.__up_to_date = False
 
     @classmethod
     def set_button_action_to_true(cls, window_name: str, action_name: str) -> None:
