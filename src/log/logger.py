@@ -2,20 +2,18 @@
 from inspect import stack
 from logging import config, getLogger
 from os.path import basename
-from threading import Thread
-from typing import Callable
+from threading import Thread, Lock
+
+# Custom libs
+from src import IS_DAEMON
 
 
-def start_in_new_thread(func: Callable, *args) -> None:
-    Thread(daemon=True, target=func, args=args).start()
-
-
-# Use lock
 class Logger:
 
     config.fileConfig(fname="..\\..\\log_settings.config")
     __logger = getLogger(__name__)
 
+    lock = Lock()
 
     @staticmethod
     def __message_correction(message: str) -> str:
@@ -31,28 +29,35 @@ class Logger:
 
     @classmethod
     def threadless_debug(cls, message: str) -> None:
-        cls.__logger.debug(cls.__message_correction(message))
+        with cls.lock:
+            cls.__logger.debug(cls.__message_correction(message))
 
     @classmethod
     def debug(cls, message: str) -> None:
-        start_in_new_thread(cls.__logger.debug, cls.__message_correction(message))
+        with cls.lock:
+            Thread(daemon=IS_DAEMON, target=cls.__logger.debug, args=(cls.__message_correction(message),)).start()
 
     @classmethod
     def info(cls, message: str) -> None:
-        start_in_new_thread(cls.__logger.info, cls.__message_correction(message))
+        with cls.lock:
+            Thread(daemon=IS_DAEMON, target=cls.__logger.info, args=(cls.__message_correction(message),)).start()
 
     @classmethod
     def warning(cls, message: str) -> None:
-        start_in_new_thread(cls.__logger.warning, cls.__message_correction(message))
+        with cls.lock:
+            Thread(daemon=IS_DAEMON, target=cls.__logger.warning, args=(cls.__message_correction(message),)).start()
 
     @classmethod
     def error(cls, message: str) -> None:
-        start_in_new_thread(cls.__logger.error, cls.__message_correction(message))
+        with cls.lock:
+            Thread(daemon=IS_DAEMON, target=cls.__logger.error, args=(cls.__message_correction(message),)).start()
 
     @classmethod
     def exception(cls, message: str) -> None:
-        start_in_new_thread(cls.__logger.exception, cls.__message_correction(message))
+        with cls.lock:
+            Thread(daemon=IS_DAEMON, target=cls.__logger.exception, args=(cls.__message_correction(message),)).start()
 
     @classmethod
     def critical(cls, message: str) -> None:
-        start_in_new_thread(cls.__logger.critical, cls.__message_correction(message))
+        with cls.lock:
+            Thread(daemon=IS_DAEMON, target=cls.__logger.critical, args=(cls.__message_correction(message),)).start()

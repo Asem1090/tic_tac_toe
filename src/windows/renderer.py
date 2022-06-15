@@ -52,7 +52,7 @@ class Renderer:
     @classmethod
     def start(cls) -> bool:
         Logger.debug("Starting the renderer in a new thread")
-        Thread(daemon=True, target=cls.__run, args=()).start()
+        Thread(daemon=IS_DAEMON, target=cls.__run, args=()).start()
         # start_in_new_thread(cls.__run, (cls,))
 
         cls.start = lambda: False
@@ -63,14 +63,14 @@ class Renderer:
         Logger.info("Running the renderer")
         while True:
             sleep(1)
-            Logger.info(str(cls.__action_required["game_window"]))
-            Logger.info(str(cls.__actions_for_windows["game_window"]["start_stop_timer_pressed"]))
 
             if cls.__up_to_date:
                 continue
 
+            Logger.info("Checking which windows need to be update")
+
             cls.__up_to_date = True
 
             if cls.__action_required["game_window"]:
-                Logger.critical("Calling update_game_window in a new thread")
+                Logger.info("Calling update_game_window in a new thread")
                 Thread(daemon=IS_DAEMON, target=cls.__update_game_window, args=()).start()
