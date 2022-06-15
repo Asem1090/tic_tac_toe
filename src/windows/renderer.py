@@ -35,25 +35,22 @@ class Renderer:
     def set_button_action_to_true(cls, window_name: str, action_name: str) -> None:
         cls.__up_to_date = False
         cls.__action_required[window_name] = True
-        print(window_name)
-        print(action_name)
         cls.__actions_for_windows[window_name][action_name] = True
 
     @classmethod
     def __update_game_window(cls):
         cls.__action_required["game_window"] = False
 
-        for action in cls.__actions_for_windows:
+        for action in cls.__actions_for_windows["game_window"]:
 
             if action == "start_stop_timer_button_pressed":
                 cls.__actions_for_windows["game_window"]["start_stop_timer_button_pressed"] = False
-                cls.manager.get_processor("game_window").start_stop_timer_pressed()
+                cls.manager.get_processor("game_window").start_stop_timer_button_pressed()
 
     @classmethod
     def start(cls) -> bool:
         Logger.debug("Starting the renderer in a new thread")
         Thread(daemon=IS_DAEMON, target=cls.__run, args=()).start()
-        # start_in_new_thread(cls.__run, (cls,))
 
         cls.start = lambda: False
         return True
@@ -67,7 +64,7 @@ class Renderer:
             if cls.__up_to_date:
                 continue
 
-            Logger.info("Checking which windows need to be update")
+            Logger.info(f"Checking which windows need to be update {cls.__up_to_date}")
 
             cls.__up_to_date = True
 

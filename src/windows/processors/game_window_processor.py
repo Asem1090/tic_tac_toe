@@ -1,12 +1,10 @@
 # Built-in libs
 from time import sleep
-from typing import TYPE_CHECKING
 
 # External libs
 from PyQt6.QtWidgets import QLabel
 
 # Custom libs
-from src import check_time, start_in_new_thread
 from src.game.game_manager import GameManager
 from src.log.logger import Logger
 from src.windows.processors.processor import Processor
@@ -72,7 +70,7 @@ class GameWindowProcessor(Processor):
         self.manager.get_window("set_timer_window").show()
 
     def start_stop_timer_button_pressed(self) -> None:
-        Logger.info("start_stop_timer_pressed called successfully")
+        Logger.info("start_stop_timer_button_pressed called successfully")
         while True:
             self.var_period = GameManager.get_timer_period()
 
@@ -82,6 +80,7 @@ class GameWindowProcessor(Processor):
                 Renderer.set_up_to_date_to_false()
 
             GameManager.switch_current_player()
+            self.__set_players_labels_color()
 
     def __leave_btn_pressed(self) -> None:
         self.__game_window.close()
