@@ -21,16 +21,16 @@ class GameManager:
 
     __buttons_pressed = 0
 
-    __timer_period = 0
+    __timer_period = "0"
 
     @classmethod
-    def get_timer_period(cls):
+    def get_timer_period(cls) -> str:
         return cls.__timer_period
 
     @classmethod
     def set_timer_period(cls, value):
-        if not (isinstance(value, int) or isinstance(value, float)) or value < 0:
-            Logger.error(f"Value must be a positive number, got {value}")
+        # if isinstance(value, str) and value.isdecimal():
+        #     Logger.error(f"Value must be a positive number, got {value}")
 
         cls.__timer_period = value
 

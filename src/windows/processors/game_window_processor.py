@@ -1,4 +1,6 @@
 # Built-in libs
+from decimal import Decimal
+from threading import Thread
 from time import sleep
 
 # External libs
@@ -9,7 +11,7 @@ from src.game.game_manager import GameManager
 from src.log.logger import Logger
 from src.windows.processors.processor import Processor
 from src.windows.processors.set_timer_processor import SetTimerProcessor
-from src.windows.renderer import Renderer
+from src.windows.signal_manager import SignalManager
 
 
 class GameWindowProcessor(Processor):
@@ -19,9 +21,10 @@ class GameWindowProcessor(Processor):
         self.var_period = None
 
         super().__init__(
-            "game_window", "start_stop_timer_button",
+            "game_window",
             **{f"btn_{i}": self.__x_o_btn_pressed for i in range(1, 10)},
             set_timer_btn=self.__set_timer_btn_pressed,
+            start_stop_timer_button=lambda: Thread(target=self.__start_stop_timer_button_pressed, args=()).start(),
             reset_game_btn=self.reset_game,
             reset_round_btn=self.__reset_round,
             leave_btn=self.__leave_btn_pressed
@@ -37,13 +40,13 @@ class GameWindowProcessor(Processor):
         if self.__player_2_label is None:
             Logger.warning("player_2_label is None")
 
+        self.__timer_label = self.__game_window.findChild(QLabel, "timer_label")
+
     @property
     def game_window(self):
         return self.__game_window
 
     def __x_o_btn_pressed(self) -> None:
-        self.var_period = GameManager.get_timer_period()
-
         current_player = GameManager.get_current_player()
 
         btn = self.__game_window.sender()
@@ -61,7 +64,7 @@ class GameWindowProcessor(Processor):
             self.__reset_round()
             return
 
-        self.var_period = GameManager.get_timer_period()
+        self.var_period = Decimal(GameManager.get_timer_period())
         GameManager.switch_current_player()
         self.__set_players_labels_color()
 
@@ -69,15 +72,20 @@ class GameWindowProcessor(Processor):
         self.manager.set_window("set_timer_window", SetTimerProcessor)
         self.manager.get_window("set_timer_window").show()
 
-    def start_stop_timer_button_pressed(self) -> None:
+    def __start_stop_timer_button_pressed(self) -> None:
         Logger.info("start_stop_timer_button_pressed called successfully")
+        s = SignalManager()
+        d = Decimal("0.1")
         while True:
-            self.var_period = GameManager.get_timer_period()
+
+            self.var_period = Decimal(GameManager.get_timer_period())
 
             while self.var_period > 0:
-                sleep(1)
-                self.var_period -= 1
-                Renderer.set_up_to_date_to_false()
+                sleep(0.1)
+                print(self.var_period)
+                self.var_period -= d
+
+                s.signal_func(self.__timer_label.setText, f"{self.var_period:.1f}")
 
             GameManager.switch_current_player()
             self.__set_players_labels_color()

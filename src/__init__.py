@@ -4,6 +4,7 @@ from time import perf_counter
 # Custom libs
 from src.log.logger import Logger
 
+
 IS_DAEMON = True
 
 

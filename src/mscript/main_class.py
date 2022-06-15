@@ -19,7 +19,6 @@ class MainClass:
 
     def __init__(self):
         self.__set_managers()
-        Renderer.start()
 
         Logger.debug("Creating QApplication object")
         self.__app = QApplication([])
@@ -35,7 +34,6 @@ class MainClass:
     def __set_managers():
         Player.set_manager(GameManager)
         Processor.set_manager(WindowsManager)
-        Renderer.set_manager(WindowsManager)
 
     def run(self) -> None:
 

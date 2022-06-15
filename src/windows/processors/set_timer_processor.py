@@ -18,6 +18,6 @@ class SetTimerProcessor(Processor):
 
     def ok_button_pressed(self):
         Logger.info("ok_button_pressed called successfully")
-        GameManager.set_timer_period(float(self.timer_period_line_edit.text()))
+        GameManager.set_timer_period(self.timer_period_line_edit.text())
         self.window.destroy()
         Logger.info("ok_button_pressed called successfully")

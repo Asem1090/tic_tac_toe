@@ -19,8 +19,8 @@ class Processor:
         self._buttons = {}  # {Button Name: Button Object}
         self._window_name = window_name
 
-        Logger.debug("Calling add_and_connect_button_to_renderer(*args)")
-        self.__add_and_connect_button_to_renderer(*args)
+        # Logger.debug("Calling add_and_connect_button_to_renderer(*args)")
+        # self.__add_and_connect_button_to_renderer(*args)
 
         Logger.debug("Calling add_and_connect_button_to_func(**kwargs)")
         self.__add_and_connect_button_to_func(**kwargs)
@@ -52,11 +52,11 @@ class Processor:
                 Logger.info(f"{btn_name} is None")
                 del self._buttons[btn_name]
 
-    def __add_and_connect_button_to_renderer(self, *args: str) -> None:
-
-        self.__add_and_connect_button_to_func(
-            **{
-                btn_name: lambda: Renderer.set_button_action_to_true(self._window_name, f"{btn_name}_pressed")
-                for btn_name in args
-            }
-        )
+    # def __add_and_connect_button_to_renderer(self, *args: str) -> None:
+    #
+    #     self.__add_and_connect_button_to_func(
+    #         **{
+    #             btn_name: lambda: Renderer.set_button_action_to_true(self._window_name, f"{btn_name}_pressed")
+    #             for btn_name in args
+    #         }
+    #     )
