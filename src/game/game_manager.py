@@ -1,6 +1,6 @@
 # Built-in libs
 from random import randrange
-from typing import Generator
+from typing import Generator, Union
 
 from src import check_time, Logger
 from src.game.player import Player
@@ -21,16 +21,17 @@ class GameManager:
 
     __buttons_pressed = 0
 
-    __timer_period = "0"
+    __timer_period = 5
 
     @classmethod
-    def get_timer_period(cls) -> str:
+    def get_timer_period(cls) -> Union[int, float]:
         return cls.__timer_period
 
     @classmethod
-    def set_timer_period(cls, value):
-        # if isinstance(value, str) and value.isdecimal():
-        #     Logger.error(f"Value must be a positive number, got {value}")
+    def set_timer_period(cls, value: Union[int, float]) -> None:
+        if not (isinstance(value, int) or isinstance(value, float)):
+            Logger.warning(f"Value must be a positive number, got {value!r}")
+            return
 
         cls.__timer_period = value
 
