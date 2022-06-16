@@ -44,6 +44,8 @@ class GameWindowProcessor(Processor):
             Logger.warning("player_2_label is None")
 
         self.__timer_label = self.__game_window.findChild(QLabel, "timer_label")
+        if self.__timer_label is None:
+            Logger.warning("timer_label is None")
 
         self.__qtimer = QTimer()
         self.__qtimer.timeout.connect(self.__update)
@@ -80,7 +82,7 @@ class GameWindowProcessor(Processor):
             self.__reset_round()
             return
 
-        self.__period = self.__period = GameManager.get_timer_period()
+        self.reset_period()
         GameManager.switch_current_player()
         self.__set_players_labels_color()
 
@@ -98,8 +100,7 @@ class GameWindowProcessor(Processor):
         if self.__period > 0:
             self.__timer_label.setText(f"{self.__period:.1f}")
         else:
-            self.__period = GameManager.get_timer_period()
-            self.__timer_label.setText(f"{self.__period:.1f}")
+            self.reset_period()
             self.__timeout()
 
     def __timeout(self) -> None:
@@ -117,10 +118,16 @@ class GameWindowProcessor(Processor):
             self.__is_timer_on = True
             self.__start_timer()
 
-    def __leave_btn_pressed(self) -> None:
-        self.__game_window.close()
+    def reset_period(self):
+        self.__period = GameManager.get_timer_period()
+        self.__timer_label.setText(f"{self.__period:.1f}")
 
-        Logger.debug("Calling show for start_window")
+    def __leave_btn_pressed(self) -> None:
+        if self.__is_timer_on:
+            self.__is_timer_on = False
+            self.__stop_timer()
+
+        self.__game_window.close()
         self.manager.get_window("start_window").show()
 
     def __update_game_window(self) -> None:
@@ -128,8 +135,9 @@ class GameWindowProcessor(Processor):
 
         self.__player_1_label.setText(f"{player_1.name} ({player_1.mark})\n{player_1.score}")
         self.__player_2_label.setText(f"{player_2.name} ({player_2.mark})\n{player_2.score}")
-
         self.__set_players_labels_color()
+
+        self.__timer_label.setText(f"{self.__period:.1f}")
 
     def __reset_x_o_buttons(self) -> None:
         for i in range(1, 10):
@@ -138,7 +146,7 @@ class GameWindowProcessor(Processor):
             button.setEnabled(True)
 
     def __new_round(self) -> None:
-        self.__period = self.__period = GameManager.get_timer_period()
+        self.reset_period()
         GameManager.set_marks()
         self.__update_game_window()
 

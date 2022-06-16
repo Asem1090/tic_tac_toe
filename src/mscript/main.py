@@ -3,7 +3,6 @@ from threading import enumerate as thread_enumerate
 from tracemalloc import start, take_snapshot
 
 # Custom libs
-from src import check_time
 from src.log.logger import Logger
 from src.mscript.main_class import MainClass
 
@@ -21,7 +20,7 @@ def main() -> None:
     for thread in thread_enumerate():
         if thread.name != "MainThread":
             Logger.threadless_debug(f"Waiting for {thread.name} to finish")
-            thread.join(1)
+            thread.join()
             Logger.threadless_debug(f"{thread.name} closed")
 
 

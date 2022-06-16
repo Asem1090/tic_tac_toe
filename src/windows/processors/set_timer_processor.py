@@ -2,7 +2,6 @@
 from PyQt6.QtWidgets import QLineEdit
 
 # Custom libs
-from src import Logger
 from src.game.game_manager import GameManager
 from src.windows.processors.processor import Processor
 
@@ -19,5 +18,5 @@ class SetTimerProcessor(Processor):
     def ok_button_pressed(self) -> None:
         period = float(self.timer_period_line_edit.text())
         GameManager.set_timer_period(period)
-        self.manager.get_processor("game_window").period = period
+        self.manager.get_processor("game_window").reset_period()
         self.manager.delete_window(self.window_name)

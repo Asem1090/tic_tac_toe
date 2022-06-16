@@ -93,12 +93,6 @@ class GameManager:
             else cls.__player_2
 
     @classmethod
-    def __get_possible_win_lines(cls, value: int) -> Generator[frozenset[int], None, None]:
-        for line in cls.__win_lines:
-            if value in line:
-                yield line.difference({value})
-
-    @classmethod
     def win_check(cls, value: int) -> bool:
         for line in cls.__get_possible_win_lines(value):
             if line.issubset(GameManager.__current_player.marked_spaces):
@@ -108,3 +102,9 @@ class GameManager:
     @classmethod
     def tie_check(cls) -> bool:
         return cls.__buttons_pressed == 9
+
+    @classmethod
+    def __get_possible_win_lines(cls, value: int) -> Generator[frozenset[int], None, None]:
+        for line in cls.__win_lines:
+            if value in line:
+                yield line.difference({value})
