@@ -1,6 +1,5 @@
 # External libs
 from PyQt6 import uic
-from PyQt6.QtGui import QAction
 from PyQt6.QtWidgets import QMainWindow
 
 # Custom libs
@@ -16,11 +15,6 @@ class MainWindowController(QMainWindow):
         Logger.debug(f"Loading {path}")
         self.__window: QMainWindow = uic.loadUi(path)
 
-        QAction("Quit", self).triggered.connect(self.closeEvent)
-
     @property
     def window(self) -> QMainWindow:
         return self.__window
-
-    def closeEvent(self, event) -> None:
-        ...
