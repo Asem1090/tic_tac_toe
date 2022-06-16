@@ -18,7 +18,7 @@ class WindowsManager:
     __windows = {}  # { window_name: {"controller": CONTROLLER, "processor" PROCESSOR_SUBCLASS}, ... }
 
     @classmethod
-    def __get_controller(cls, window_name: str) -> CONTROLLER:
+    def get_controller(cls, window_name: str) -> CONTROLLER:
         Logger.info(f"Accessing and returning {window_name} controller")
         return cls.__windows[window_name]["controller"]
 
@@ -30,7 +30,7 @@ class WindowsManager:
     @classmethod
     def get_window(cls, window_name: str) -> QMainWindow:
         Logger.info(f"Accessing {window_name} from {window_name} controller and returning it")
-        return cls.__get_controller(window_name).window
+        return cls.get_controller(window_name).window
 
     @classmethod
     def set_window(
