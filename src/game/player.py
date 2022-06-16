@@ -1,5 +1,5 @@
 # Built-in libs
-from typing import Literal, TYPE_CHECKING
+from typing import Literal, TYPE_CHECKING, Type
 
 # Custom libs
 from src.log.logger import Logger
@@ -9,7 +9,7 @@ if TYPE_CHECKING:
 
 
 class Player:
-    manager: "GameManager" = None
+    __manager: Type["GameManager"] = None
 
     def __init__(self, name: str):
         self.__name = name
@@ -18,11 +18,15 @@ class Player:
         self.__marked_spaces = set()
 
     @property
-    def name(self):
+    def manager(self) -> Type["GameManager"]:
+        return Player.__manager
+
+    @property
+    def name(self) -> str:
         return self.__name
 
     @property
-    def score(self):
+    def score(self) -> int:
         return self.__score
 
     @property
@@ -42,7 +46,7 @@ class Player:
 
     @classmethod
     def set_manager(cls, _class) -> None:
-        cls.manager = _class
+        cls.__manager = _class
 
     def increment_score(self) -> None:
         self.__score += 1
@@ -53,8 +57,8 @@ class Player:
             return False
 
         self.__marked_spaces.add(value)
-        self.manager.increment_buttons_pressed()
-        return self.manager.win_check(value)
+        self.__manager.increment_buttons_pressed()
+        return self.__manager.win_check(value)
 
     def reset_score(self) -> None:
         self.__score = 0
