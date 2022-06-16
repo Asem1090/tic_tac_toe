@@ -20,7 +20,7 @@ class GameWindowProcessor(Processor):
     __btn_to_num = {f"btn_{i}": i for i in range(1, 10)}
 
     def __init__(self):
-        self.__period: Union[int, float] = 5
+        self.__period: Union[int, float] = 0
         self.__is_timer_on = False
 
         super().__init__(
@@ -33,7 +33,7 @@ class GameWindowProcessor(Processor):
             leave_btn=self.__leave_btn_pressed
         )
 
-        self.__game_window = self.__manager.get_window("game_window")
+        self.__game_window = self.manager.get_window("game_window")
 
         self.__player_1_label = self.__game_window.findChild(QLabel, "player_1_label")
         if self.__player_1_label is None:
@@ -85,8 +85,8 @@ class GameWindowProcessor(Processor):
         self.__set_players_labels_color()
 
     def __set_timer_btn_pressed(self) -> None:
-        self.__manager.set_window("set_timer_window", SetTimerProcessor)
-        self.__manager.get_window("set_timer_window").show()
+        self.manager.set_window("set_timer_window", SetTimerProcessor)
+        self.manager.get_window("set_timer_window").show()
 
     def __start_timer(self) -> None:
         self.__timer_label.setText(f"{self.__period:.1f}")
@@ -121,7 +121,7 @@ class GameWindowProcessor(Processor):
         self.__game_window.close()
 
         Logger.debug("Calling show for start_window")
-        self.__manager.get_window("start_window").show()
+        self.manager.get_window("start_window").show()
 
     def __update_game_window(self) -> None:
         player_1, player_2 = GameManager.get_players()

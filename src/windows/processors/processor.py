@@ -23,7 +23,7 @@ class Processor:
 
     @property
     def manager(self) -> Type["WindowsManager"]:
-        return self.__manager
+        return Processor.__manager
 
     @property
     def window_name(self) -> str:
@@ -45,7 +45,7 @@ class Processor:
         return self._buttons[btn_name] is not None
 
     def __add_and_connect_button_to_func(self, **kwargs: Callable[[], None]) -> None:
-        window = self.__manager.get_window(self.__window_name)
+        window = Processor.__manager.get_window(self.__window_name)
 
         for btn_name in kwargs:
             self._buttons[btn_name] = window.findChild(QPushButton, btn_name)
