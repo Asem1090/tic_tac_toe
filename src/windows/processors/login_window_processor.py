@@ -15,13 +15,13 @@ class LoginWindowProcessor(Processor):
             login_btn=self.__login_btn_pressed, cancel_btn=self.__cancel_btn_pressed
         )
 
-        self.window = self.manager.get_window(self._window_name)
+        self.window = self.__manager.get_window(self.__window_name)
         self.username_line_edit = self.window.findChild(QLineEdit, "username_line_edit")
         self.password_line_edit = self.window.findChild(QLineEdit, "password_line_edit")
 
         # close = self.window.findChild(QAction, "actionExit")
 
-    def __login_btn_pressed(self):
+    def __login_btn_pressed(self) -> None:
         username_text = self.username_line_edit.text()
         password_text = self.password_line_edit.text()
 
@@ -35,15 +35,15 @@ class LoginWindowProcessor(Processor):
 
         self.__close_event()
 
-    def __cancel_btn_pressed(self):
+    def __cancel_btn_pressed(self) -> None:
         self.__close_event()
 
-    def __close_event(self):
+    def __close_event(self) -> None:
         self.username_line_edit.setText("")
         self.password_line_edit.setText("")
 
         self.window.close()
 
     @staticmethod
-    def __password_match(username, password):
+    def __password_match(username, password) -> bool:
         return True

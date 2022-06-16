@@ -1,6 +1,8 @@
 # External libs
+from typing import NewType, Union
+
 from PyQt6.QtCore import QTimer
-from PyQt6.QtWidgets import QLabel
+from PyQt6.QtWidgets import QLabel, QMainWindow
 
 # Custom libs
 from src.game.game_manager import GameManager
@@ -11,12 +13,14 @@ from src.windows.processors.set_timer_processor import SetTimerProcessor
 UPDATE_PERIOD = 0.1
 MILLISECOND_UPDATE_PERIOD: int = int(UPDATE_PERIOD * 1000)
 
+POSITIVE_INTEGER = NewType("POSITIVE_INTEGER", int)
+
 
 class GameWindowProcessor(Processor):
     __btn_to_num = {f"btn_{i}": i for i in range(1, 10)}
 
     def __init__(self):
-        self.period = None
+        self.__period: Union[int, float] = 5
         self.__is_timer_on = False
 
         super().__init__(
@@ -29,7 +33,7 @@ class GameWindowProcessor(Processor):
             leave_btn=self.__leave_btn_pressed
         )
 
-        self.__game_window = self.manager.get_window("game_window")
+        self.__game_window = self.__manager.get_window("game_window")
 
         self.__player_1_label = self.__game_window.findChild(QLabel, "player_1_label")
         if self.__player_1_label is None:
@@ -45,11 +49,21 @@ class GameWindowProcessor(Processor):
         self.__qtimer.timeout.connect(self.__update)
 
     @property
-    def game_window(self):
+    def game_window(self) -> QMainWindow:
         return self.__game_window
 
+    @property
+    def period(self) -> Union[int, float]:
+        return self.__period
+
+    @period.setter
+    def period(self, value: POSITIVE_INTEGER) -> None:
+        if not isinstance(value, (int, float)) or value < 0:
+            Logger.warning(f"Value must be a positive integer, got {value!r}")
+
+        self.__period = value
+
     def __x_o_btn_pressed(self) -> None:
-        self.__qtimer.setInterval(MILLISECOND_UPDATE_PERIOD)
         current_player = GameManager.get_current_player()
         btn = self.__game_window.sender()
         btn.setText(current_player.mark)
@@ -66,33 +80,33 @@ class GameWindowProcessor(Processor):
             self.__reset_round()
             return
 
+        self.__period = self.__period = GameManager.get_timer_period()
         GameManager.switch_current_player()
         self.__set_players_labels_color()
 
     def __set_timer_btn_pressed(self) -> None:
-        self.manager.set_window("set_timer_window", SetTimerProcessor)
-        self.manager.get_window("set_timer_window").show()
+        self.__manager.set_window("set_timer_window", SetTimerProcessor)
+        self.__manager.get_window("set_timer_window").show()
 
-    def __start_timer(self):
-        self.period = GameManager.get_timer_period()
-        self.__timer_label.setText(f"{self.period:.1f}")
+    def __start_timer(self) -> None:
+        self.__timer_label.setText(f"{self.__period:.1f}")
         self.__qtimer.start(MILLISECOND_UPDATE_PERIOD)
 
-    def __update(self):
-        self.period -= UPDATE_PERIOD
+    def __update(self) -> None:
+        self.__period -= UPDATE_PERIOD
 
-        if self.period > 0:
-            self.__timer_label.setText(f"{self.period:.1f}")
+        if self.__period > 0:
+            self.__timer_label.setText(f"{self.__period:.1f}")
         else:
-            self.period = GameManager.get_timer_period()
-            self.__timer_label.setText(f"{self.period:.1f}")
+            self.__period = GameManager.get_timer_period()
+            self.__timer_label.setText(f"{self.__period:.1f}")
             self.__timeout()
 
-    def __timeout(self):
+    def __timeout(self) -> None:
         GameManager.switch_current_player()
         self.__set_players_labels_color()
 
-    def __stop_timer(self):
+    def __stop_timer(self) -> None:
         self.__qtimer.stop()
 
     def __start_stop_timer_button_pressed(self) -> None:
@@ -107,7 +121,7 @@ class GameWindowProcessor(Processor):
         self.__game_window.close()
 
         Logger.debug("Calling show for start_window")
-        self.manager.get_window("start_window").show()
+        self.__manager.get_window("start_window").show()
 
     def __update_game_window(self) -> None:
         player_1, player_2 = GameManager.get_players()
@@ -124,6 +138,7 @@ class GameWindowProcessor(Processor):
             button.setEnabled(True)
 
     def __new_round(self) -> None:
+        self.__period = self.__period = GameManager.get_timer_period()
         GameManager.set_marks()
         self.__update_game_window()
 

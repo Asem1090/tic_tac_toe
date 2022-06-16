@@ -2,13 +2,14 @@
 from time import perf_counter
 
 # Custom libs
+from typing import Callable, TypeVar
+
 from src.log.logger import Logger
 
+RETURN_TYPE = TypeVar("RETURN_TYPE")
 
-IS_DAEMON = True
 
-
-def __call_func(func, *args, **kwargs):
+def __call_func(func: Callable[..., RETURN_TYPE], *args, **kwargs) -> RETURN_TYPE:
     func_name = func.__name__
 
     Logger.debug(f"Calling {func_name}")
@@ -24,8 +25,8 @@ def __call_func(func, *args, **kwargs):
     return returned_value
 
 
-def check_time(func):
-    def check(*args, **kwargs):
+def check_time(func: Callable[..., RETURN_TYPE]) -> Callable[..., RETURN_TYPE]:
+    def check(*args, **kwargs) -> RETURN_TYPE:
 
         returned_value = None
 

@@ -1,5 +1,4 @@
 # Built-in libs
-import time
 from sys import exit
 
 # External libs
@@ -11,7 +10,6 @@ from src.game.player import Player
 from src.log.logger import Logger
 from src.windows.processors.processor import Processor
 from src.windows.processors.start_window_processor import StartWindowProcessor
-from src.windows.renderer import Renderer
 from src.windows.windows_manager import WindowsManager
 
 
@@ -31,7 +29,7 @@ class MainClass:
         Logger.info("show called successfully for start window")
 
     @staticmethod
-    def __set_managers():
+    def __set_managers() -> None:
         Player.set_manager(GameManager)
         Processor.set_manager(WindowsManager)
 

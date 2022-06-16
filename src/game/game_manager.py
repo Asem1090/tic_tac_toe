@@ -2,7 +2,7 @@
 from random import randrange
 from typing import Generator, Union
 
-from src import check_time, Logger
+from src import Logger
 from src.game.player import Player
 
 
@@ -48,11 +48,11 @@ class GameManager:
         return cls.__current_player
 
     @classmethod
-    def set_player_1(cls, username: str):
+    def set_player_1(cls, username: str) -> None:
         cls.__player_1 = Player(username)
 
     @classmethod
-    def set_player_2(cls, username: str):
+    def set_player_2(cls, username: str) -> None:
         cls.__player_2 = Player(username)
 
     @classmethod
@@ -77,12 +77,12 @@ class GameManager:
         cls.__buttons_pressed = 0
 
     @classmethod
-    def reset_scores(cls):
+    def reset_scores(cls) -> None:
         cls.__player_1.reset_score()
         cls.__player_2.reset_score()
 
     @classmethod
-    def reset_marked_spaces(cls):
+    def reset_marked_spaces(cls) -> None:
         cls.__player_1.reset_marked_spaces()
         cls.__player_2.reset_marked_spaces()
 

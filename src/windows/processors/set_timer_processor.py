@@ -12,12 +12,12 @@ class SetTimerProcessor(Processor):
     def __init__(self):
         super().__init__("set_timer_window", ok_button=self.ok_button_pressed)
 
-        self.window = self.manager.get_window("set_timer_window")
+        self.__window = self.__manager.get_window("set_timer_window")
 
-        self.timer_period_line_edit = self.window.findChild(QLineEdit, "timer_period_line_edit")
+        self.timer_period_line_edit = self.__window.findChild(QLineEdit, "timer_period_line_edit")
 
-    def ok_button_pressed(self):
-        Logger.info("ok_button_pressed called successfully")
-        GameManager.set_timer_period(float(self.timer_period_line_edit.text()))
-        self.window.destroy()
-        Logger.info("ok_button_pressed called successfully")
+    def ok_button_pressed(self) -> None:
+        period = float(self.timer_period_line_edit.text())
+        GameManager.set_timer_period(period)
+        Processor.__manager.get_processor("game_window").period = period
+        self.__manager.delete_window(self.window_name)

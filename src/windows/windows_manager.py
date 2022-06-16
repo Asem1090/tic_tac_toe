@@ -10,20 +10,20 @@ from src.windows.controllers.dialog_controller import DialogController
 from src.windows.controllers.main_window_controller import MainWindowController
 from src.windows.processors.processor import Processor
 
-processor_subclass = TypeVar("processor_subclass", bound=Type[Processor])
-controller = Union[MainWindowController, DialogController]
+PROCESSOR_SUBCLASS = TypeVar("PROCESSOR_SUBCLASS", bound=Type[Processor])
+CONTROLLER = Union[MainWindowController, DialogController]
 
 
 class WindowsManager:
-    __windows = {}
+    __windows = {}  # { window_name: {"controller": CONTROLLER, "processor" PROCESSOR_SUBCLASS}, ... }
 
     @classmethod
-    def __get_controller(cls, window_name: str) -> controller:
+    def __get_controller(cls, window_name: str) -> CONTROLLER:
         Logger.info(f"Accessing and returning {window_name} controller")
         return cls.__windows[window_name]["controller"]
 
     @classmethod
-    def get_processor(cls, window_name: str) -> processor_subclass:
+    def get_processor(cls, window_name: str) -> PROCESSOR_SUBCLASS:
         Logger.info(f"Accessing and returning {window_name} processor")
         return cls.__windows[window_name]["processor"]
 
@@ -34,11 +34,11 @@ class WindowsManager:
 
     @classmethod
     def set_window(
-            cls, window_name: str, processor: processor_subclass,
+            cls, window_name: str, processor: PROCESSOR_SUBCLASS,
             window_type: str = "QMainWindow", ui_file_path: str = None
     ) -> None:
 
-        if cls.__window_exists(window_name):
+        if cls.window_exists(window_name):
             return
 
         if ui_file_path is None:
@@ -63,9 +63,13 @@ class WindowsManager:
         windows[window_name]["processor"] = processor()
 
     @classmethod
-    def __window_exists(cls, window_name: str) -> bool:
-        if window_name in cls.__windows.keys():
-            Logger.info("Window exists")
-            return True
-        Logger.warning("Window does not exist")
-        return False
+    def delete_window(cls, window_name: str) -> bool:
+        if not cls.window_exists(window_name):
+            return False
+
+        del cls.__windows[window_name]
+        return True
+
+    @classmethod
+    def window_exists(cls, window_name: str) -> bool:
+        return window_name in cls.__windows.keys()
