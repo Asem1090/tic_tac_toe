@@ -136,7 +136,7 @@ class GameManager:
     @classmethod
     def reset_buttons_pressed(cls) -> None:
         """
-        Resets GameManager.__buttons_pressed to 0.
+        Sets GameManager.__buttons_pressed to 0.
         :return: None
         """
 
@@ -145,7 +145,7 @@ class GameManager:
     @classmethod
     def reset_scores(cls) -> None:
         """
-        Resets _Player__score for both players.
+        Sets _Player__score for both players to 0.
         :return: None
         """
 
@@ -155,7 +155,7 @@ class GameManager:
     @classmethod
     def reset_marked_spaces(cls) -> None:
         """
-        Resets _Player__marked_spaces for both players.
+        Sets _Player__marked_spaces for both players to an empty set.
         :return: None
         """
 
