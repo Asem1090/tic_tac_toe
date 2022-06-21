@@ -1,6 +1,9 @@
+"""
+This is where the main method is.
+"""
+
 # Built-in libs
-from threading import enumerate as thread_enumerate
-from tracemalloc import start, take_snapshot
+from threading import enumerate as thread_enumerate  # Changing the name to avoid replacing enumerate built-in function.
 
 # Custom libs
 from src.log.logger import Logger
@@ -8,15 +11,18 @@ from src.mscript.main_class import MainClass
 
 
 def main() -> None:
-    # start()
+    """
+    Here is where MainClass is used and where we confirm all threads close properly.
+    :return: None
+    """
+
     Logger.debug("Creating MainClass object")
     main_instance = MainClass()
     Logger.info("MainClass object created")
 
-    # [print(item) for item in take_snapshot().statistics("filename")]
-
     main_instance.run()
 
+    # Making sure all threads close before the main thread closes.
     for thread in thread_enumerate():
         if thread.name != "MainThread":
             Logger.threadless_debug(f"Waiting for {thread.name} to finish")

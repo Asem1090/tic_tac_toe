@@ -1,3 +1,7 @@
+"""
+This file contains the main script.
+"""
+
 # Built-in libs
 from sys import exit
 
@@ -14,8 +18,15 @@ from src.windows.windows_manager import WindowsManager
 
 
 class MainClass:
+    """
+    The main script is here, for better structure.
+    """
 
     def __init__(self):
+        """
+        We create some required variables here then call show method for a window.
+        """
+
         self.__set_managers()
 
         Logger.debug("Creating QApplication object")
@@ -30,10 +41,18 @@ class MainClass:
 
     @staticmethod
     def __set_managers() -> None:
+        """
+        Setting managers here to avoid circular import.
+        :return: None
+        """
         Player.set_manager(GameManager)
         Processor.set_manager(WindowsManager)
 
     def run(self) -> None:
+        """
+        The application is executed here.
+        :return: None
+        """
 
         try:
             Logger.info("Executing the application / Displaying start window")
