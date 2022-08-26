@@ -6,8 +6,8 @@ from PyQt6.QtWidgets import QMainWindow
 
 # Custom libs
 from src.log.logger import Logger
-from src.windows.controllers.dialog_controller import DialogController
-from src.windows.controllers.main_window_controller import MainWindowController
+from src.windows.controllers import DialogController
+from src.windows.controllers import MainWindowController
 from src.windows.processors.processor import Processor
 
 PROCESSOR_SUBCLASS = TypeVar("PROCESSOR_SUBCLASS", bound=Type[Processor])
