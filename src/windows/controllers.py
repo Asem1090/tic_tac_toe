@@ -13,7 +13,7 @@ class MainWindowController(QMainWindow):
         super().__init__()
 
         Logger.debug(f"Loading {path}")
-        self.__window: QMainWindow = uic.loadUi(path)  # PUT SELF OR OTHER CLASS!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        self.__window: QMainWindow = uic.loadUi(path)  # TODO PUT SELF OR OTHER CLASS!
 
     @property
     def window(self) -> QMainWindow:
@@ -27,7 +27,7 @@ class DialogController(QDialog):
         super().__init__()
 
         Logger.debug(f"Loading {path}")
-        self.__window: QDialog = uic.loadUi(path)  # PUT SELF OR OTHER CLASS!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        self.__window: QDialog = uic.loadUi(path)  # TODO PUT SELF OR OTHER CLASS!
 
     @property
     def window(self) -> QDialog:

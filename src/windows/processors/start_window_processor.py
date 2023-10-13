@@ -32,10 +32,10 @@ class StartWindowProcessor(Processor):
         game_window_processor.game_window.show()
 
     def __pve_btn_pressed(self) -> None:
-        Logger.info("pve_btn_pressed called successfully")
+        Logger.info("pve_btn_pressed called successfully")  # TODO: Option not added yet.
 
     def __local_network_btn_pressed(self) -> None:
-        Logger.info("local_network_btn_pressed called successfully")
+        Logger.info("local_network_btn_pressed called successfully")  # TODO: Option not added yet.
 
     def __player_login_btn_pressed(self, title: str) -> None:
         self.manager.set_window("login_window", LoginWindowProcessor)
