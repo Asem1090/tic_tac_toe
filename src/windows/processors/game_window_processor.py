@@ -28,7 +28,7 @@ class GameWindowProcessor(Processor):
             **{f"btn_{i}": self.__x_o_btn_pressed for i in range(1, 10)},
             set_timer_btn=self.__set_timer_btn_pressed,
             start_stop_timer_button=self.__start_stop_timer_button_pressed,
-            reset_game_btn=self.__reset_game,
+            reset_game_btn=self.reset_game,
             reset_round_btn=self.__reset_round,
             leave_btn=self.__leave_btn_pressed,
         )
@@ -157,7 +157,7 @@ class GameWindowProcessor(Processor):
         GameManager.set_marks()
         self.__update_game_window()
 
-    def __reset_game(self) -> None:
+    def reset_game(self) -> None:
         GameManager.reset_scores()
         self.__reset_round()
 
