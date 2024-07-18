@@ -2,8 +2,8 @@
 from PyQt6.QtWidgets import QLineEdit
 
 # Custom libs
-from src.game.game_manager import GameManager
-from src.windows.processors.processor import Processor
+from game.game_manager import GameManager
+from windows.processors.processor import Processor
 
 
 class SetTimerProcessor(Processor):
@@ -13,7 +13,9 @@ class SetTimerProcessor(Processor):
 
         self.__window = self.manager.get_window("set_timer_window")
 
-        self.timer_period_line_edit = self.__window.findChild(QLineEdit, "timer_period_line_edit")
+        self.timer_period_line_edit = self.__window.findChild(
+            QLineEdit, "timer_period_line_edit"
+        )
 
     def ok_button_pressed(self) -> None:
         period = float(self.timer_period_line_edit.text())

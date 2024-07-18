@@ -14,7 +14,9 @@ class Logger:
     This class uses threads to log with Lock on the variables.
     """
 
-    config.fileConfig(fname="..\\..\\log_settings.config")  # The file with the log message format.
+    config.fileConfig(
+        fname="log_settings.config"
+    )  # The file with the log message format.
     __logger = getLogger(__name__)
 
     lock = Lock()
@@ -57,7 +59,11 @@ class Logger:
         """
 
         with cls.lock:
-            Thread(daemon=True, target=cls.__logger.debug, args=(cls.__message_correction(message),)).start()
+            Thread(
+                daemon=True,
+                target=cls.__logger.debug,
+                args=(cls.__message_correction(message),),
+            ).start()
 
     @classmethod
     def info(cls, message: str) -> None:
@@ -68,7 +74,11 @@ class Logger:
         """
 
         with cls.lock:
-            Thread(daemon=True, target=cls.__logger.info, args=(cls.__message_correction(message),)).start()
+            Thread(
+                daemon=True,
+                target=cls.__logger.info,
+                args=(cls.__message_correction(message),),
+            ).start()
 
     @classmethod
     def warning(cls, message: str) -> None:
@@ -79,7 +89,11 @@ class Logger:
         """
 
         with cls.lock:
-            Thread(daemon=True, target=cls.__logger.warning, args=(cls.__message_correction(message),)).start()
+            Thread(
+                daemon=True,
+                target=cls.__logger.warning,
+                args=(cls.__message_correction(message),),
+            ).start()
 
     @classmethod
     def error(cls, message: str) -> None:
@@ -90,7 +104,11 @@ class Logger:
         """
 
         with cls.lock:
-            Thread(daemon=True, target=cls.__logger.error, args=(cls.__message_correction(message),)).start()
+            Thread(
+                daemon=True,
+                target=cls.__logger.error,
+                args=(cls.__message_correction(message),),
+            ).start()
 
     @classmethod
     def exception(cls, message: str) -> None:
@@ -101,7 +119,11 @@ class Logger:
         """
 
         with cls.lock:
-            Thread(daemon=True, target=cls.__logger.exception, args=(cls.__message_correction(message),)).start()
+            Thread(
+                daemon=True,
+                target=cls.__logger.exception,
+                args=(cls.__message_correction(message),),
+            ).start()
 
     @classmethod
     def critical(cls, message: str) -> None:
@@ -112,4 +134,8 @@ class Logger:
         """
 
         with cls.lock:
-            Thread(daemon=True, target=cls.__logger.critical, args=(cls.__message_correction(message),)).start()
+            Thread(
+                daemon=True,
+                target=cls.__logger.critical,
+                args=(cls.__message_correction(message),),
+            ).start()

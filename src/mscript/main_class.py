@@ -9,12 +9,12 @@ from sys import exit
 from PyQt6.QtWidgets import QApplication
 
 # Custom libs
-from src.game.game_manager import GameManager
-from src.game.player import Player
-from src.log.logger import Logger
-from src.windows.processors.processor import Processor
-from src.windows.processors.start_window_processor import StartWindowProcessor
-from src.windows.windows_manager import WindowsManager
+from game.game_manager import GameManager
+from game.player import Player
+from log.logger import Logger
+from windows.processors.processor import Processor
+from windows.processors.start_window_processor import StartWindowProcessor
+from windows.windows_manager import WindowsManager
 
 
 class MainClass:

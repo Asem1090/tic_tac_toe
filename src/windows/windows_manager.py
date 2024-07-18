@@ -5,17 +5,19 @@ from typing import Type, TypeVar, Union
 from PyQt6.QtWidgets import QMainWindow
 
 # Custom libs
-from src.log.logger import Logger
-from src.windows.controllers import DialogController
-from src.windows.controllers import MainWindowController
-from src.windows.processors.processor import Processor
+from log.logger import Logger
+from windows.controllers import DialogController
+from windows.controllers import MainWindowController
+from windows.processors.processor import Processor
 
 PROCESSOR_SUBCLASS = TypeVar("PROCESSOR_SUBCLASS", bound=Type[Processor])
 CONTROLLER = Union[MainWindowController, DialogController]
 
 
 class WindowsManager:
-    __windows = {}  # { window_name: {"controller": CONTROLLER, "processor" PROCESSOR_SUBCLASS}, ... }
+    __windows = (
+        {}
+    )  # { window_name: {"controller": CONTROLLER, "processor" PROCESSOR_SUBCLASS}, ... }
 
     @classmethod
     def get_controller(cls, window_name: str) -> CONTROLLER:
@@ -29,20 +31,25 @@ class WindowsManager:
 
     @classmethod
     def get_window(cls, window_name: str) -> QMainWindow:
-        Logger.info(f"Accessing {window_name} from {window_name} controller and returning it")
+        Logger.info(
+            f"Accessing {window_name} from {window_name} controller and returning it"
+        )
         return cls.get_controller(window_name).window
 
     @classmethod
     def set_window(
-            cls, window_name: str, processor: PROCESSOR_SUBCLASS,
-            window_type: str = "QMainWindow", ui_file_path: str = None
+        cls,
+        window_name: str,
+        processor: PROCESSOR_SUBCLASS,
+        window_type: str = "QMainWindow",
+        ui_file_path: str = None,
     ) -> None:
 
         if cls.window_exists(window_name):
             return
 
         if ui_file_path is None:
-            ui_file_path = f"..\\..\\Dep\\UI\\{window_name}.ui"
+            ui_file_path = f"Dep\\UI\\{window_name}.ui"
 
         windows = cls.__windows
 

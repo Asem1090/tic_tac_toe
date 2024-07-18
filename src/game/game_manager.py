@@ -7,8 +7,8 @@ from random import randrange
 from typing import Generator, Union
 
 # Custom libs.
-from src import Logger
-from src.game.player import Player
+from log.logger import Logger
+from game.player import Player
 
 
 class GameManager:
@@ -17,11 +17,18 @@ class GameManager:
     """
 
     # Includes rows, columns and both diagonals.
-    __win_lines = frozenset({
-        frozenset({1, 2, 3}), frozenset({4, 5, 6}), frozenset({7, 8, 9}),  # rows.
-        frozenset({1, 4, 7}), frozenset({2, 5, 8}), frozenset({3, 6, 9}),  # columns.
-        frozenset({1, 5, 9}), frozenset({3, 5, 7})  # diagonals.
-    })
+    __win_lines = frozenset(
+        {
+            frozenset({1, 2, 3}),
+            frozenset({4, 5, 6}),
+            frozenset({7, 8, 9}),  # rows.
+            frozenset({1, 4, 7}),
+            frozenset({2, 5, 8}),
+            frozenset({3, 6, 9}),  # columns.
+            frozenset({1, 5, 9}),
+            frozenset({3, 5, 7}),  # diagonals.
+        }
+    )
 
     # Setting default players objects.
     __player_1 = Player("Player 1")
@@ -114,13 +121,13 @@ class GameManager:
 
         # Setting the marks and current_player randomly.
         if randrange(1, 201) & 1:
-            cls.__player_1.mark = 'X'
-            cls.__player_2.mark = 'O'
+            cls.__player_1.mark = "X"
+            cls.__player_2.mark = "O"
 
             cls.__current_player = cls.__player_1
         else:
-            cls.__player_1.mark = 'O'
-            cls.__player_2.mark = 'X'
+            cls.__player_1.mark = "O"
+            cls.__player_2.mark = "X"
 
             cls.__current_player = cls.__player_2
 
@@ -169,9 +176,11 @@ class GameManager:
         :return: None
         """
 
-        cls.__current_player = cls.__player_1 \
-            if (cls.__current_player is cls.__player_2)\
+        cls.__current_player = (
+            cls.__player_1
+            if (cls.__current_player is cls.__player_2)
             else cls.__player_2
+        )
 
     @classmethod
     def win_check(cls, value: int) -> bool:
@@ -198,7 +207,9 @@ class GameManager:
         return cls.__buttons_pressed == 9
 
     @classmethod
-    def __get_possible_win_lines(cls, value: int) -> Generator[frozenset[int], None, None]:
+    def __get_possible_win_lines(
+        cls, value: int
+    ) -> Generator[frozenset[int], None, None]:
         """
         Gets the possible win lines depending on the button pressed.
         :param value: An integer, represents the position of the x/o button pressed (1-9).
@@ -206,5 +217,7 @@ class GameManager:
         """
 
         for line in cls.__win_lines:  # Iterating through all lines.
-            if value in line:  # Checking if the space marked, aka value, is in the line.
+            if (
+                value in line
+            ):  # Checking if the space marked, aka value, is in the line.
                 yield line.difference({value})  # Yields the line without the value.

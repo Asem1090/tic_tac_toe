@@ -5,10 +5,10 @@ from typing import Callable, TYPE_CHECKING, Type
 from PyQt6.QtWidgets import QPushButton
 
 # Custom libs
-from src.log.logger import Logger
+from log.logger import Logger
 
 if TYPE_CHECKING:
-    from src.windows.windows_manager import WindowsManager
+    from windows.windows_manager import WindowsManager
 
 
 class Processor:
@@ -54,7 +54,9 @@ class Processor:
                 try:
                     self._buttons[btn_name].clicked.connect(kwargs[btn_name])
                 except TypeError:
-                    Logger.exception(f"Could not connect {btn_name} to provided function")
+                    Logger.exception(
+                        f"Could not connect {btn_name} to provided function"
+                    )
             else:
                 Logger.info(f"{btn_name} is None")
                 del self._buttons[btn_name]

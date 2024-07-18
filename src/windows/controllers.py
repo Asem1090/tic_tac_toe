@@ -3,7 +3,7 @@ from PyQt6 import uic
 from PyQt6.QtWidgets import QMainWindow, QDialog
 
 # Custom libs
-from src.log.logger import Logger
+from log.logger import Logger
 
 
 class MainWindowController(QMainWindow):

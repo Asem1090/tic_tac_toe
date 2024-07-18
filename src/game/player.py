@@ -6,10 +6,10 @@ This file defines Player, and its attributes and behaviors.
 from typing import Literal, TYPE_CHECKING, Type, Optional
 
 # Custom libs.
-from src.log.logger import Logger
+from log.logger import Logger
 
 if TYPE_CHECKING:  # Prevents circular import when type hinting.
-    from src.game.game_manager import GameManager
+    from game.game_manager import GameManager
 
 
 class Player:
@@ -27,8 +27,10 @@ class Player:
 
         self.__name = name
         self.__score = 0
-        self.__mark: Optional[Literal['X', 'O']] = None  # Either X or O.
-        self.__marked_spaces = set()  # 1-9, represents the positions of the marks the player has.
+        self.__mark: Optional[Literal["X", "O"]] = None  # Either X or O.
+        self.__marked_spaces = (
+            set()
+        )  # 1-9, represents the positions of the marks the player has.
 
     @property
     def manager(self) -> Type["GameManager"]:
@@ -76,7 +78,7 @@ class Player:
         return self.__marked_spaces
 
     @mark.setter
-    def mark(self, value: Literal['X', 'O']) -> None:
+    def mark(self, value: Literal["X", "O"]) -> None:
         """
         A setter for Player.__mark.
         :param value: A string, should be X or O.
@@ -84,7 +86,7 @@ class Player:
         """
 
         # Checking whether value is X or O, or something else.
-        if value not in frozenset({'X', 'O'}):
+        if value not in frozenset({"X", "O"}):
             Logger.error(f"Cannot set mark to {value}, value must be 'X' or 'O'.")
             return
 

@@ -1,9 +1,8 @@
 # Custom libs
-from src import check_time
-from src.log.logger import Logger
-from src.windows.processors.game_window_processor import GameWindowProcessor
-from src.windows.processors.login_window_processor import LoginWindowProcessor
-from src.windows.processors.processor import Processor
+from log.logger import Logger
+from windows.processors.game_window_processor import GameWindowProcessor
+from windows.processors.login_window_processor import LoginWindowProcessor
+from windows.processors.processor import Processor
 
 
 class StartWindowProcessor(Processor):
@@ -11,9 +10,11 @@ class StartWindowProcessor(Processor):
     def __init__(self):
         super().__init__(
             "start_window",
-            pvp_btn=self.__pvp_btn_pressed, pve_btn=self.__pve_btn_pressed,
+            pvp_btn=self.__pvp_btn_pressed,
+            pve_btn=self.__pve_btn_pressed,
             local_network_btn=self.__local_network_btn_pressed,
-            player_1_login_btn=self.__player_1_login_btn_pressed, player_2_login_btn=self.__player_2_login_btn_pressed
+            player_1_login_btn=self.__player_1_login_btn_pressed,
+            player_2_login_btn=self.__player_2_login_btn_pressed,
         )
 
     def __pvp_btn_pressed(self) -> None:
@@ -32,10 +33,14 @@ class StartWindowProcessor(Processor):
         game_window_processor.game_window.show()
 
     def __pve_btn_pressed(self) -> None:
-        Logger.info("pve_btn_pressed called successfully")  # TODO: Option not added yet.
+        Logger.info(
+            "pve_btn_pressed called successfully"
+        )  # TODO: Option not added yet.
 
     def __local_network_btn_pressed(self) -> None:
-        Logger.info("local_network_btn_pressed called successfully")  # TODO: Option not added yet.
+        Logger.info(
+            "local_network_btn_pressed called successfully"
+        )  # TODO: Option not added yet.
 
     def __player_login_btn_pressed(self, title: str) -> None:
         self.manager.set_window("login_window", LoginWindowProcessor)

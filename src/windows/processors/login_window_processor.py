@@ -2,8 +2,8 @@
 from PyQt6.QtWidgets import QLineEdit
 
 # Custom libs
-from src.game.game_manager import GameManager
-from src.windows.processors.processor import Processor
+from game.game_manager import GameManager
+from windows.processors.processor import Processor
 
 
 class LoginWindowProcessor(Processor):
@@ -11,7 +11,8 @@ class LoginWindowProcessor(Processor):
     def __init__(self):
         super().__init__(
             "login_window",
-            login_btn=self.__login_btn_pressed, cancel_btn=self.__cancel_btn_pressed
+            login_btn=self.__login_btn_pressed,
+            cancel_btn=self.__cancel_btn_pressed,
         )
 
         self.controller = self.manager.get_controller(self.window_name)

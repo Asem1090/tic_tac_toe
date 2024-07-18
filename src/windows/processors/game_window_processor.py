@@ -5,10 +5,10 @@ from PyQt6.QtCore import QTimer
 from PyQt6.QtWidgets import QLabel, QMainWindow
 
 # Custom libs
-from src.game.game_manager import GameManager
-from src.log.logger import Logger
-from src.windows.processors.processor import Processor
-from src.windows.processors.set_timer_processor import SetTimerProcessor
+from game.game_manager import GameManager
+from log.logger import Logger
+from windows.processors.processor import Processor
+from windows.processors.set_timer_processor import SetTimerProcessor
 
 UPDATE_PERIOD = 0.1
 MILLISECOND_UPDATE_PERIOD: int = int(UPDATE_PERIOD * 1000)
@@ -30,7 +30,7 @@ class GameWindowProcessor(Processor):
             start_stop_timer_button=self.__start_stop_timer_button_pressed,
             reset_game_btn=self.__reset_game,
             reset_round_btn=self.__reset_round,
-            leave_btn=self.__leave_btn_pressed
+            leave_btn=self.__leave_btn_pressed,
         )
 
         self.__game_window = self.manager.get_window("game_window")
@@ -133,8 +133,12 @@ class GameWindowProcessor(Processor):
     def __update_game_window(self) -> None:
         player_1, player_2 = GameManager.get_players()
 
-        self.__player_1_label.setText(f"{player_1.name} ({player_1.mark})\n{player_1.score}")
-        self.__player_2_label.setText(f"{player_2.name} ({player_2.mark})\n{player_2.score}")
+        self.__player_1_label.setText(
+            f"{player_1.name} ({player_1.mark})\n{player_1.score}"
+        )
+        self.__player_2_label.setText(
+            f"{player_2.name} ({player_2.mark})\n{player_2.score}"
+        )
         self.__set_players_labels_color()
 
         self.__timer_label.setText(f"{self.__period:.1f}")

@@ -4,7 +4,7 @@ from time import perf_counter
 # Custom libs
 from typing import Callable, TypeVar
 
-from src.log.logger import Logger
+from log.logger import Logger
 
 RETURN_TYPE = TypeVar("RETURN_TYPE")
 
